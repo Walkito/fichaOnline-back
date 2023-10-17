@@ -1,6 +1,7 @@
 package br.com.walkito.fichaOnline.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -8,7 +9,8 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "accounts")
+@Entity
+@Table(name = "accounts")
 public class Account {
 
     @Id
@@ -30,6 +32,11 @@ public class Account {
     @NotBlank
     private String user;
 
+    @Column(nullable = false, unique = true, length = 50)
+    @Size(max = 50)
+    @NotBlank
+    private String email;
+
     @Column(nullable = false, length = 30)
     @Size(max = 30)
     @NotBlank
@@ -42,26 +49,35 @@ public class Account {
 
     @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    private List<AccountRun> accountsRuns = new ArrayList<>();
+    private List<AccountRun> accountRuns = new ArrayList<>();
 
     public Account(){
 
     }
 
-    public Account(String name, String lastName, String user, String password, String type) {
+    public Account(String name, String lastName, String user, String email, String password, String type) {
         this.name = name;
         this.lastName = lastName;
         this.user = user;
+        this.email = email;
         this.password = password;
         this.type = type;
     }
 
-    public List<AccountRun> getAccountsRuns() {
-        return accountsRuns;
+    public String getEmail() {
+        return email;
     }
 
-    public void setAccountsRuns(List<AccountRun> accountsRuns) {
-        this.accountsRuns = accountsRuns;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public List<AccountRun> getAccountRuns() {
+        return accountRuns;
+    }
+
+    public void setAccountRuns(List<AccountRun> accountRuns) {
+        this.accountRuns = accountRuns;
     }
 
     public String getName() {

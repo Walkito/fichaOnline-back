@@ -5,7 +5,8 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
-@Entity(name = "dnd_personality")
+@Entity
+@Table(name = "dnd_personality")
 public class Personality {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

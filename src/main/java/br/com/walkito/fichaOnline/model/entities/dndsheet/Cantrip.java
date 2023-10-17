@@ -4,7 +4,8 @@ import br.com.walkito.fichaOnline.model.entities.SheetDnD;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-@Entity(name = "dnd_cantrips")
+@Entity
+@Table(name = "dnd_cantrips")
 public class Cantrip {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

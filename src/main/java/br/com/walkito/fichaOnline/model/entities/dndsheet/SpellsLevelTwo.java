@@ -4,7 +4,8 @@ import br.com.walkito.fichaOnline.model.entities.SheetDnD;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 
-@Entity(name = "dnd_spells_two")
+@Entity
+@Table(name = "dnd_spells_two")
 public class SpellsLevelTwo {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

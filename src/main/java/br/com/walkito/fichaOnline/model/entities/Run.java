@@ -9,7 +9,8 @@ import jakarta.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "runs")
+@Entity
+@Table(name = "runs")
 public class Run {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

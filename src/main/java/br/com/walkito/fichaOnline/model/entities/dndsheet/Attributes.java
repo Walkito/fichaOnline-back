@@ -6,7 +6,8 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 
-@Entity(name = "dnd_attributes")
+@Entity
+@Table(name = "dnd_attributes")
 public class Attributes {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -7,7 +7,8 @@ import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "players_sheets")
+@Entity
+@Table(name = "players_sheets")
 public class PlayerSheet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

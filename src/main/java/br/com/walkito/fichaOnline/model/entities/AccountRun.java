@@ -3,7 +3,8 @@ package br.com.walkito.fichaOnline.model.entities;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 
-@Entity(name = "accounts_runs")
+@Entity
+@Table(name = "accounts_runs")
 public class AccountRun {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
