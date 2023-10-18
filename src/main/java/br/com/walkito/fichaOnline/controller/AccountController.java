@@ -21,12 +21,12 @@ public class AccountController {
         return service.doLogin(user,email,password);
     }
 
-    @PostMapping(path = "/login/create")
+    @PostMapping(path = "/create")
     public Account createAccount(/*@RequestBody*/ @Valid Account account) throws ExceptionsCustomizadas {
         return service.createAccount(account);
     }
 
-    @PutMapping(path = "/login/edit")
+    @PutMapping(path = "/edit")
     public Account editAccount(/*@RequestBody*/ @Valid Account account) throws ExceptionsCustomizadas {
         return service.editAccount(account);
     }

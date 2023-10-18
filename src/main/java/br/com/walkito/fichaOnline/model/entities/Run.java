@@ -28,7 +28,7 @@ public class Run {
 
     @OneToMany(mappedBy = "run", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
-    private List<AccountRun> accountsRuns = new ArrayList<>();
+    private List<AccountRun> accountRuns = new ArrayList<>();
 
     public Run(){
 
@@ -39,12 +39,12 @@ public class Run {
         this.system = system;
     }
 
-    public List<AccountRun> getAccountsRuns() {
-        return accountsRuns;
+    public List<AccountRun> getAccountRuns() {
+        return accountRuns;
     }
 
-    public void setAccountsRuns(List<AccountRun> accountsRuns) {
-        this.accountsRuns = accountsRuns;
+    public void setAccountsRuns(List<AccountRun> accountRuns) {
+        this.accountRuns = accountRuns;
     }
 
     public String getCampaign() {
@@ -61,5 +61,13 @@ public class Run {
 
     public void setSystem(System system) {
         this.system = system;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
