@@ -4,12 +4,13 @@ import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.service.RunService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping(path = "/api/run")
+@RequestMapping(path = "/api/run", produces = "application/json;charset=UTF-8")
 public class RunController {
     @Autowired
     RunService service;
@@ -20,7 +21,8 @@ public class RunController {
     }
 
     @PostMapping(path = "/register")
-    public Run registerRun(/*@RequestBody*/ @Valid Run run){
+    @ResponseBody
+    public Run registerRun(@RequestBody @Valid Run run){
         return service.registerRun(run);
     }
 
