@@ -1,14 +1,16 @@
 package br.com.walkito.fichaOnline.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "runs")
 public class Run {
@@ -23,12 +25,11 @@ public class Run {
 
     @ManyToOne
     @JoinColumn(name = "system_id")
-    @JsonManagedReference
+    @JsonBackReference
     private System system;
 
-    @OneToMany(mappedBy = "run", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<AccountRun> accountRuns = new ArrayList<>();
+    @ManyToMany
+    private List<Account> accounts = new ArrayList<>();
 
     public Run(){
 
@@ -39,12 +40,12 @@ public class Run {
         this.system = system;
     }
 
-    public List<AccountRun> getAccountRuns() {
-        return accountRuns;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccountsRuns(List<AccountRun> accountRuns) {
-        this.accountRuns = accountRuns;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public String getCampaign() {

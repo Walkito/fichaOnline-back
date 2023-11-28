@@ -1,14 +1,16 @@
 package br.com.walkito.fichaOnline.model.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
-
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "accounts")
 public class Account {
@@ -43,16 +45,12 @@ public class Account {
     private String password;
 
     @Column(nullable = false, length = 2)
-    @Size(max = 2)
-    @NotBlank
     private String type;
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<AccountRun> accountRuns = new ArrayList<>();
+    @ManyToMany(mappedBy = "accounts")
+    private List<Run> runs = new ArrayList<>();
 
-    public Account(){
-
+    public Account() {
     }
 
     public Account(String name, String lastName, String user, String email, String password, String type) {
@@ -62,6 +60,14 @@ public class Account {
         this.email = email;
         this.password = password;
         this.type = type;
+    }
+
+    public List<Run> getRuns() {
+        return runs;
+    }
+
+    public void setRuns(List<Run> runs) {
+        this.runs = runs;
     }
 
     public int getId() {
@@ -78,14 +84,6 @@ public class Account {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public List<AccountRun> getAccountRuns() {
-        return accountRuns;
-    }
-
-    public void setAccountRuns(List<AccountRun> accountRuns) {
-        this.accountRuns = accountRuns;
     }
 
     public String getName() {

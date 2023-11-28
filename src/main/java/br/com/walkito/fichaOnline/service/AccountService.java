@@ -19,10 +19,10 @@ public class AccountService {
         try{
             Account account = repository.getLogin(user, email, password);
             if (account != null) {
-                return new ResponseEntity<>("Login realizado com sucesso!", HttpStatus.OK);
+                return new ResponseEntity<>(account,HttpStatus.OK);
             } else {
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
-                        "Login não encontrada", "Usuário/E-mail ou Senha incorretos.");
+                        "Usuário/E-mail ou Senha incorretos.","Login não encontrado ");
             }
         }catch (Exception e){
             throw e;
@@ -37,7 +37,7 @@ public class AccountService {
                         "O E-mail informado não é válido. Por favor, inserir um e-mail válido");
             }
             repository.save(account);
-            return new ResponseEntity<>("Conta criada com sucesso!",HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e){
             throw e;
         }
@@ -53,7 +53,7 @@ public class AccountService {
             Account actualAccount = repository.findByEmail(account.getEmail());
             BeanUtils.copyProperties(account, actualAccount, "accountRuns");
             repository.save(actualAccount);
-            return new ResponseEntity<>("Conta editada com sucesso!", HttpStatus.OK);
+            return new ResponseEntity<>(actualAccount, HttpStatus.OK);
         } catch (Exception e){
             throw e;
         }

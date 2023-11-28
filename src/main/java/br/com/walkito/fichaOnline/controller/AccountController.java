@@ -22,12 +22,12 @@ public class AccountController {
     }
 
     @PostMapping(path = "/create")
-    public ResponseEntity<Object> createAccount(/*@RequestBody*/ @Valid Account account){
+    public ResponseEntity<Object> createAccount(@RequestBody @Valid Account account){
         return service.createAccount(account);
     }
 
     @PutMapping(path = "/edit")
-    public ResponseEntity<Object> editAccount(/*@RequestBody*/ @Valid Account account){
+    public ResponseEntity<Object> editAccount(@RequestBody @Valid Account account){
         return service.editAccount(account);
     }
 
