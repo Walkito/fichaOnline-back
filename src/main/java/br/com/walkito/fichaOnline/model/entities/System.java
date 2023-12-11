@@ -21,7 +21,6 @@ public class System {
     private String name;
 
     @OneToMany(mappedBy = "system", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonManagedReference
     private List<Run> runs;
 
     public System(){

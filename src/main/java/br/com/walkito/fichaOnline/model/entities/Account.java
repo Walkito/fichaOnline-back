@@ -1,8 +1,6 @@
 package br.com.walkito.fichaOnline.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -44,8 +42,11 @@ public class Account {
     @NotBlank
     private String password;
 
-    @Column(nullable = false, length = 2)
+    @Column(nullable = false, length = 2, columnDefinition = "VARCHAR(2) DEFAULT 'J'")
     private String type;
+
+    @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'A'")
+    private String situation;
 
     @ManyToMany(mappedBy = "accounts")
     private List<Run> runs = new ArrayList<>();
@@ -124,5 +125,13 @@ public class Account {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getSituation() {
+        return situation;
+    }
+
+    public void setSituation(String situation) {
+        this.situation = situation;
     }
 }

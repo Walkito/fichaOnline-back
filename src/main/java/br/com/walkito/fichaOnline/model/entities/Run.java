@@ -25,7 +25,6 @@ public class Run {
 
     @ManyToOne
     @JoinColumn(name = "system_id")
-    @JsonBackReference
     private System system;
 
     @ManyToMany
@@ -44,8 +43,9 @@ public class Run {
         return accounts;
     }
 
-    public void setAccounts(List<Account> accounts) {
-        this.accounts = accounts;
+    public void setAccounts(Account account) {
+        accounts.add(account);
+        account.getRuns().add(this);
     }
 
     public String getCampaign() {

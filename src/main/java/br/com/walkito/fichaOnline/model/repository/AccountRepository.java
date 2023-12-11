@@ -13,4 +13,6 @@ public interface AccountRepository extends JpaRepository<Account, Integer> {
                             @Param("password") String password);
 
     public Account findByEmail(String email);
+
+    public Account searchById(int id);
 }

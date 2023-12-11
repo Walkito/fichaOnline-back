@@ -30,6 +30,4 @@ public class AccountController {
     public ResponseEntity<Object> editAccount(@RequestBody @Valid Account account){
         return service.editAccount(account);
     }
-
-
 }
