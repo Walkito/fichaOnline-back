@@ -2,6 +2,7 @@ package br.com.walkito.fichaOnline.model.entities.dndsheet;
 
 import br.com.walkito.fichaOnline.model.entities.SheetDnD;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 @Entity
@@ -36,7 +37,7 @@ public class Cantrip {
     private String cantrip8;
 
     @OneToOne
-    @JsonBackReference
+    @JsonIgnore
     private SheetDnD sheetDnD;
 
     public Cantrip(){
@@ -123,5 +124,13 @@ public class Cantrip {
 
     public void setSheetDnD(SheetDnD sheetDnD) {
         this.sheetDnD = sheetDnD;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

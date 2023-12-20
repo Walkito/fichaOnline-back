@@ -2,6 +2,7 @@ package br.com.walkito.fichaOnline.model.entities.dndsheet;
 
 import br.com.walkito.fichaOnline.model.entities.SheetDnD;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 
@@ -28,7 +29,7 @@ public class Personality {
     private String flaws;
 
     @OneToOne
-    @JsonBackReference
+    @JsonIgnore
     private SheetDnD sheetDnD;
 
     public Personality() {
@@ -79,5 +80,13 @@ public class Personality {
 
     public void setSheetDnD(SheetDnD sheetDnD) {
         this.sheetDnD = sheetDnD;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

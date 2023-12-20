@@ -2,6 +2,7 @@ package br.com.walkito.fichaOnline.model.entities;
 
 import br.com.walkito.fichaOnline.model.entities.dndsheet.*;
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -15,12 +16,10 @@ public class SheetDnD {
 
     @OneToOne
     @JoinColumn(name = "personal_infos_id")
-    @JsonManagedReference
     private PersonalInfos personalInfo;
 
     @OneToOne
     @JoinColumn(name = "attributes_id")
-    @JsonManagedReference
     private Attributes attribute;
 
     @Column(precision = 1)
@@ -33,12 +32,10 @@ public class SheetDnD {
 
     @OneToOne
     @JoinColumn(name = "saving_throws_id")
-    @JsonManagedReference
     private SavingThrows savingThrow;
 
     @OneToOne
     @JoinColumn(name = "skills_id")
-    @JsonManagedReference
     private Skills skill;
 
     @Column(nullable = false, precision = 2)
@@ -81,12 +78,10 @@ public class SheetDnD {
 
     @OneToOne
     @JoinColumn(name = "attacks_id")
-    @JsonManagedReference
     private Attacks attack;
 
     @OneToOne
     @JoinColumn(name = "personality_id")
-    @JsonManagedReference
     private Personality personality;
 
     @Column(precision = 2)
@@ -132,57 +127,47 @@ public class SheetDnD {
 
     @OneToOne
     @JoinColumn(name = "cantrip_id")
-    @JsonManagedReference
     private Cantrip cantrip;
 
     @OneToOne
     @JoinColumn(name = "spell_level_one")
-    @JsonManagedReference
     private SpellsLevelOne spellsLevelOne;
 
     @OneToOne
     @JoinColumn(name = "spell_level_two")
-    @JsonManagedReference
     private SpellsLevelTwo spellsLevelTwo;
 
     @OneToOne
     @JoinColumn(name = "spell_level_three")
-    @JsonManagedReference
     private SpellsLevelThree spellsLevelThree;
 
     @OneToOne
     @JoinColumn(name = "spell_level_four")
-    @JsonManagedReference
     private SpellsLevelFour spellsLevelFour;
 
     @OneToOne
     @JoinColumn(name = "spell_level_five")
-    @JsonManagedReference
     private SpellsLevelFive spellsLevelFive;
 
     @OneToOne
     @JoinColumn(name = "spell_level_six")
-    @JsonManagedReference
     private SpellsLevelSix spellsLevelSix;
 
     @OneToOne
     @JoinColumn(name = "spell_level_seven")
-    @JsonManagedReference
     private SpellsLevelSeven spellsLevelSeven;
 
     @OneToOne
     @JoinColumn(name = "spell_level_eigth")
-    @JsonManagedReference
     private SpellsLevelEigth spellsLevelEigth;
 
     @OneToOne
     @JoinColumn(name = "spell_level_nine")
-    @JsonManagedReference
     private SpellsLevelNine spellsLevelNine;
 
     @ManyToOne
     @JoinColumn(name = "players_sheets_id")
-    @JsonBackReference
+    @JsonIgnore
     private PlayerSheet playerSheet;
 
     public SheetDnD(){
@@ -438,6 +423,7 @@ public class SheetDnD {
     }
 
     public void setPersonalInfo(PersonalInfos personalInfo) {
+        personalInfo.setSheetDnD(this);
         this.personalInfo = personalInfo;
     }
 
@@ -446,6 +432,7 @@ public class SheetDnD {
     }
 
     public void setAttribute(Attributes attribute) {
+        attribute.setSheetDnD(this);
         this.attribute = attribute;
     }
 
@@ -454,6 +441,7 @@ public class SheetDnD {
     }
 
     public void setSavingThrow(SavingThrows savingThrow) {
+        savingThrow.setSheetDnD(this);
         this.savingThrow = savingThrow;
     }
 
@@ -462,6 +450,7 @@ public class SheetDnD {
     }
 
     public void setSkill(Skills skill) {
+        skill.setSheetDnD(this);
         this.skill = skill;
     }
 
@@ -470,6 +459,7 @@ public class SheetDnD {
     }
 
     public void setAttack(Attacks attack) {
+        attack.setSheetDnD(this);
         this.attack = attack;
     }
 
@@ -478,6 +468,7 @@ public class SheetDnD {
     }
 
     public void setPersonality(Personality personality) {
+        personality.setSheetDnD(this);
         this.personality = personality;
     }
 
@@ -494,30 +485,37 @@ public class SheetDnD {
     }
 
     public void setCantrip(Cantrip cantrip) {
+        cantrip.setSheetDnD(this);
         this.cantrip = cantrip;
     }
 
     public SpellsLevelOne getSpellsLevelOne() {
+
         return spellsLevelOne;
     }
 
     public void setSpellsLevelOne(SpellsLevelOne spellsLevelOne) {
+        spellsLevelOne.setSheetDnD(this);
         this.spellsLevelOne = spellsLevelOne;
     }
 
     public SpellsLevelTwo getSpellsLevelTwo() {
+
         return spellsLevelTwo;
     }
 
     public void setSpellsLevelTwo(SpellsLevelTwo spellsLevelTwo) {
+        spellsLevelTwo.setSheetDnD(this);
         this.spellsLevelTwo = spellsLevelTwo;
     }
 
     public SpellsLevelThree getSpellsLevelThree() {
+
         return spellsLevelThree;
     }
 
     public void setSpellsLevelThree(SpellsLevelThree spellsLevelThree) {
+        spellsLevelThree.setSheetDnD(this);
         this.spellsLevelThree = spellsLevelThree;
     }
 
@@ -526,6 +524,7 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelFour(SpellsLevelFour spellsLevelFour) {
+        spellsLevelFour.setSheetDnD(this);
         this.spellsLevelFour = spellsLevelFour;
     }
 
@@ -534,6 +533,7 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelFive(SpellsLevelFive spellsLevelFive) {
+        spellsLevelFive.setSheetDnD(this);
         this.spellsLevelFive = spellsLevelFive;
     }
 
@@ -542,6 +542,7 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelSix(SpellsLevelSix spellsLevelSix) {
+        spellsLevelSix.setSheetDnD(this);
         this.spellsLevelSix = spellsLevelSix;
     }
 
@@ -550,6 +551,7 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelSeven(SpellsLevelSeven spellsLevelSeven) {
+        spellsLevelSeven.setSheetDnD(this);
         this.spellsLevelSeven = spellsLevelSeven;
     }
 
@@ -558,6 +560,7 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelEigth(SpellsLevelEigth spellsLevelEigth) {
+        spellsLevelEigth.setSheetDnD(this);
         this.spellsLevelEigth = spellsLevelEigth;
     }
 
@@ -566,6 +569,7 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelNine(SpellsLevelNine spellsLevelNine) {
+        spellsLevelNine.setSheetDnD(this);
         this.spellsLevelNine = spellsLevelNine;
     }
 }
