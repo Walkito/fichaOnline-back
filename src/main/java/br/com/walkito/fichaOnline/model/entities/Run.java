@@ -1,16 +1,14 @@
 package br.com.walkito.fichaOnline.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "runs")
 public class Run {
@@ -25,18 +23,47 @@ public class Run {
 
     @ManyToOne
     @JoinColumn(name = "system_id")
+    @NotNull
     private System system;
 
-    @ManyToMany
+    @Column(nullable = false)
+    private LocalDate dateBeginning;
+
+    @Column
+    private LocalDate dateEnding;
+
+    @ManyToMany()
+    @JsonIgnore
     private List<Account> accounts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "run", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<PlayerSheet> sheets = new ArrayList<>();
 
     public Run(){
 
     }
 
-    public Run(String campaign, System system) {
+    public Run(int id){
+
+    }
+
+    public Run(String campaign, System system, String inicio, String fim) {
         this.campaign = campaign;
-        this.system = system;
+        setSystem(system);
+
+        LocalDate datainicio = inicio.isEmpty() ? LocalDate.now() : LocalDate.parse(inicio);
+        LocalDate dataFim = fim.isEmpty() ? null : LocalDate.parse(fim);
+        setDateBeginning(datainicio);
+        setDateEnding(dataFim);
+    }
+
+    public List<PlayerSheet> getSheets() {
+        return sheets;
+    }
+
+    public void setSheets(List<PlayerSheet> sheets) {
+        this.sheets = sheets;
     }
 
     public List<Account> getAccounts() {
@@ -44,8 +71,8 @@ public class Run {
     }
 
     public void setAccounts(Account account) {
-        accounts.add(account);
         account.getRuns().add(this);
+        this.accounts.add(account);
     }
 
     public String getCampaign() {
@@ -62,6 +89,7 @@ public class Run {
 
     public void setSystem(System system) {
         this.system = system;
+        this.system.setRuns(this);
     }
 
     public int getId() {
@@ -70,5 +98,21 @@ public class Run {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public LocalDate getDateBeginning() {
+        return dateBeginning;
+    }
+
+    public void setDateBeginning(LocalDate dateBeginning) {
+        this.dateBeginning = dateBeginning;
+    }
+
+    public LocalDate getDateEnding() {
+        return dateEnding;
+    }
+
+    public void setDateEnding(LocalDate dateEnding) {
+        this.dateEnding = dateEnding;
     }
 }

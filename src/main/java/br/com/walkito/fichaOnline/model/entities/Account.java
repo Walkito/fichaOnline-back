@@ -1,18 +1,15 @@
 package br.com.walkito.fichaOnline.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
 import java.util.ArrayList;
 import java.util.List;
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 @Entity
 @Table(name = "accounts")
 public class Account {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -42,25 +39,35 @@ public class Account {
     @NotBlank
     private String password;
 
-    @Column(nullable = false, length = 2, columnDefinition = "VARCHAR(2) DEFAULT 'J'")
+    @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'J'")
     private String type;
 
     @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'A'")
     private String situation;
 
     @ManyToMany(mappedBy = "accounts")
+    @JsonIgnore
     private List<Run> runs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL,orphanRemoval = true)
+    @JsonIgnore
+    private List<PlayerSheet> sheets = new ArrayList<>();
 
     public Account() {
     }
 
-    public Account(String name, String lastName, String user, String email, String password, String type) {
+    public Account(int id){
+
+    }
+
+    public Account(String name, String lastName, String user, String email, String password, String type, String situation) {
         this.name = name;
         this.lastName = lastName;
         this.user = user;
         this.email = email;
         this.password = password;
         this.type = type;
+        this.situation = situation;
     }
 
     public List<Run> getRuns() {
@@ -133,5 +140,13 @@ public class Account {
 
     public void setSituation(String situation) {
         this.situation = situation;
+    }
+
+    public List<PlayerSheet> getSheets() {
+        return sheets;
+    }
+
+    public void setSheets(List<PlayerSheet> sheets) {
+        this.sheets = sheets;
     }
 }

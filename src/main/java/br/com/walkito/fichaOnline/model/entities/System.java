@@ -1,11 +1,11 @@
 package br.com.walkito.fichaOnline.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,10 +21,15 @@ public class System {
     private String name;
 
     @OneToMany(mappedBy = "system", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Run> runs;
+    @JsonIgnore
+    private List<Run> runs = new ArrayList<>();
 
     public System(){
 
+    }
+
+    public System(int id) {
+        this.id = id;
     }
 
     public System(String name) {
@@ -35,8 +40,8 @@ public class System {
         return runs;
     }
 
-    public void setRuns(List<Run> runs) {
-        this.runs = runs;
+    public void setRuns(Run run) {
+        this.runs.add(run);
     }
 
     public String getName() {

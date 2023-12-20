@@ -1,5 +1,6 @@
 package br.com.walkito.fichaOnline.service;
 
+import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.model.entities.System;
 import br.com.walkito.fichaOnline.model.repository.SystemRepository;
 import br.com.walkito.fichaOnline.service.exception.ExceptionConstructor;
@@ -10,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -27,16 +29,15 @@ public class SystemService {
                 return new ResponseEntity<>(repository.findAll(),HttpStatus.OK);
             }
         } catch (Exception e){
-            throw e;
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
     }
 
     public ResponseEntity<Object> createSystem(System system){
         try {
-            repository.save(system);
-            return new ResponseEntity<>("Sistema criado com sucesso!", HttpStatus.OK);
+            return new ResponseEntity<>(repository.save(system), HttpStatus.OK);
         } catch (Exception e){
-            throw e;
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
     }
 
@@ -49,11 +50,30 @@ public class SystemService {
                         "O sistema em questão não foi encontrado, por isso não foi possível realizara  edição.");
             } else {
                 BeanUtils.copyProperties(system, actualSystem, "runs");
-                repository.save(actualSystem);
-                return new ResponseEntity<>("Sistema atualizado com sucesso!", HttpStatus.OK);
+                return new ResponseEntity<>(repository.save(actualSystem), HttpStatus.OK);
             }
         } catch (Exception e){
-            throw e;
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public ResponseEntity<Object> deleteSystem(int idSystem){
+        try{
+            System system = repository.searchById(idSystem);
+            if(system.getId() < 1 ){
+                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
+                        "Não foi possível excluir o sistema.",
+                        "O sistema não foi encontrado, o id passado não é válido.");
+            }
+            if(!system.getRuns().isEmpty()){
+                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
+                        "Existem Runs vinculadas a esse sistema, não foi possível excluir",
+                        "Não é possivel excluir um sistema que tem runs vinculadas, pelo bem da consistência de dados.");
+            }
+            repository.delete(system);
+            return new ResponseEntity<>("Sistema excluído com sucesso!", HttpStatus.OK);
+        } catch (Exception e){
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
     }
 }

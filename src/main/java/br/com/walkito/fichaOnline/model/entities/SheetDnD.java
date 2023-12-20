@@ -1,6 +1,7 @@
 package br.com.walkito.fichaOnline.model.entities;
 
 import br.com.walkito.fichaOnline.model.entities.dndsheet.*;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -181,7 +182,7 @@ public class SheetDnD {
 
     @ManyToOne
     @JoinColumn(name = "players_sheets_id")
-    @JsonManagedReference
+    @JsonBackReference
     private PlayerSheet playerSheet;
 
     public SheetDnD(){
@@ -228,7 +229,7 @@ public class SheetDnD {
         this.spellsLevelSeven = spellsLevelSeven;
         this.spellsLevelEigth = spellsLevelEigth;
         this.spellsLevelNine = spellsLevelNine;
-        this.playerSheet = playerSheet;
+        setPlayerSheet(playerSheet);
     }
 
     public int getInspiration() {
@@ -421,5 +422,150 @@ public class SheetDnD {
 
     public void setPlayerSheet(PlayerSheet playerSheet) {
         this.playerSheet = playerSheet;
+        this.playerSheet.getSheetsDnd().add(this);
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public PersonalInfos getPersonalInfo() {
+        return personalInfo;
+    }
+
+    public void setPersonalInfo(PersonalInfos personalInfo) {
+        this.personalInfo = personalInfo;
+    }
+
+    public Attributes getAttribute() {
+        return attribute;
+    }
+
+    public void setAttribute(Attributes attribute) {
+        this.attribute = attribute;
+    }
+
+    public SavingThrows getSavingThrow() {
+        return savingThrow;
+    }
+
+    public void setSavingThrow(SavingThrows savingThrow) {
+        this.savingThrow = savingThrow;
+    }
+
+    public Skills getSkill() {
+        return skill;
+    }
+
+    public void setSkill(Skills skill) {
+        this.skill = skill;
+    }
+
+    public Attacks getAttack() {
+        return attack;
+    }
+
+    public void setAttack(Attacks attack) {
+        this.attack = attack;
+    }
+
+    public Personality getPersonality() {
+        return personality;
+    }
+
+    public void setPersonality(Personality personality) {
+        this.personality = personality;
+    }
+
+    public String getSpellcastingHability() {
+        return spellcastingHability;
+    }
+
+    public void setSpellcastingHability(String spellcastingHability) {
+        this.spellcastingHability = spellcastingHability;
+    }
+
+    public Cantrip getCantrip() {
+        return cantrip;
+    }
+
+    public void setCantrip(Cantrip cantrip) {
+        this.cantrip = cantrip;
+    }
+
+    public SpellsLevelOne getSpellsLevelOne() {
+        return spellsLevelOne;
+    }
+
+    public void setSpellsLevelOne(SpellsLevelOne spellsLevelOne) {
+        this.spellsLevelOne = spellsLevelOne;
+    }
+
+    public SpellsLevelTwo getSpellsLevelTwo() {
+        return spellsLevelTwo;
+    }
+
+    public void setSpellsLevelTwo(SpellsLevelTwo spellsLevelTwo) {
+        this.spellsLevelTwo = spellsLevelTwo;
+    }
+
+    public SpellsLevelThree getSpellsLevelThree() {
+        return spellsLevelThree;
+    }
+
+    public void setSpellsLevelThree(SpellsLevelThree spellsLevelThree) {
+        this.spellsLevelThree = spellsLevelThree;
+    }
+
+    public SpellsLevelFour getSpellsLevelFour() {
+        return spellsLevelFour;
+    }
+
+    public void setSpellsLevelFour(SpellsLevelFour spellsLevelFour) {
+        this.spellsLevelFour = spellsLevelFour;
+    }
+
+    public SpellsLevelFive getSpellsLevelFive() {
+        return spellsLevelFive;
+    }
+
+    public void setSpellsLevelFive(SpellsLevelFive spellsLevelFive) {
+        this.spellsLevelFive = spellsLevelFive;
+    }
+
+    public SpellsLevelSix getSpellsLevelSix() {
+        return spellsLevelSix;
+    }
+
+    public void setSpellsLevelSix(SpellsLevelSix spellsLevelSix) {
+        this.spellsLevelSix = spellsLevelSix;
+    }
+
+    public SpellsLevelSeven getSpellsLevelSeven() {
+        return spellsLevelSeven;
+    }
+
+    public void setSpellsLevelSeven(SpellsLevelSeven spellsLevelSeven) {
+        this.spellsLevelSeven = spellsLevelSeven;
+    }
+
+    public SpellsLevelEigth getSpellsLevelEigth() {
+        return spellsLevelEigth;
+    }
+
+    public void setSpellsLevelEigth(SpellsLevelEigth spellsLevelEigth) {
+        this.spellsLevelEigth = spellsLevelEigth;
+    }
+
+    public SpellsLevelNine getSpellsLevelNine() {
+        return spellsLevelNine;
+    }
+
+    public void setSpellsLevelNine(SpellsLevelNine spellsLevelNine) {
+        this.spellsLevelNine = spellsLevelNine;
     }
 }

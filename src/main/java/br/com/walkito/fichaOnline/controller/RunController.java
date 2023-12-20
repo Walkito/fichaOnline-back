@@ -1,16 +1,12 @@
 package br.com.walkito.fichaOnline.controller;
 
-import br.com.walkito.fichaOnline.model.dtos.LinkRunAccountDTO;
-import br.com.walkito.fichaOnline.model.entities.Account;
+import br.com.walkito.fichaOnline.model.dtos.RunAccountDTO;
 import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.service.RunService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/run")
@@ -23,10 +19,21 @@ public class RunController {
         return service.getRuns();
     }
 
+    @GetMapping(path = "/linkedAccounts")
+    public ResponseEntity<Object> getLinkedAccounts(@RequestParam(value = "idRun", defaultValue = "0")
+                                                int idRun){
+        return service.getLinkedAccounts(idRun);
+    }
+
     @PostMapping(path = "/register")
     @ResponseBody
     public ResponseEntity<Object> registerRun(@RequestBody @Valid Run run){
         return service.registerRun(run);
+    }
+
+    @PostMapping(path = "/linkAccount")
+    public ResponseEntity<Object> linkAccount(@RequestBody @Valid RunAccountDTO lra){
+        return service.linkAccount(lra);
     }
 
     @PutMapping(path = "/edit")
@@ -34,10 +41,8 @@ public class RunController {
         return service.editRun(run);
     }
 
-    @PostMapping(path = "/linkAccount")
-    public ResponseEntity<Object> linkAccount(@RequestBody @Valid LinkRunAccountDTO lra){
-        return service.linkAccount(lra);
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<Object> deleteRun(@RequestParam("idRun") int idRun){
+        return service.deleteRun(idRun);
     }
-
-
 }

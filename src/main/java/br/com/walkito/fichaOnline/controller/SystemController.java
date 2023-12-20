@@ -31,4 +31,9 @@ public class SystemController {
         return service.editSystem(system);
     }
 
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<Object> deleteSystem(@RequestParam("idSystem") int idSystem){
+        return service.deleteSystem(idSystem);
+    }
+
 }
