@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class SystemService {
@@ -40,8 +41,8 @@ public class SystemService {
 
     public ResponseEntity<Object> editSystem(System system){
         try {
-            //TODO verificar se existe o sistema
-            if (system == null){
+            Optional<System> actualSystem = repository.findById(system.getId());
+            if (actualSystem.isEmpty()){
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Sistema não encontrado",
                         "O sistema em questão não foi encontrado, por isso não foi possível realizara  edição.");
