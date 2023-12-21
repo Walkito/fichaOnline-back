@@ -3,7 +3,7 @@ package br.com.walkito.fichaOnline.service;
 import br.com.walkito.fichaOnline.Utils;
 import br.com.walkito.fichaOnline.model.entities.Account;
 import br.com.walkito.fichaOnline.service.exception.ExceptionConstructor;
-import br.com.walkito.fichaOnline.model.repository.AccountRepository;
+import br.com.walkito.fichaOnline.model.repositorys.AccountRepository;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;

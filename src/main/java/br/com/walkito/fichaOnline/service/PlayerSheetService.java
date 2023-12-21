@@ -1,23 +1,18 @@
 package br.com.walkito.fichaOnline.service;
 
-import br.com.walkito.fichaOnline.model.dtos.RunAccountDTO;
-import br.com.walkito.fichaOnline.model.entities.Account;
 import br.com.walkito.fichaOnline.model.entities.PlayerSheet;
-import br.com.walkito.fichaOnline.model.entities.Run;
-import br.com.walkito.fichaOnline.model.repository.AccountRepository;
-import br.com.walkito.fichaOnline.model.repository.PlayerSheetRepository;
-import br.com.walkito.fichaOnline.model.repository.RunRepository;
+import br.com.walkito.fichaOnline.model.repositorys.AccountRepository;
+import br.com.walkito.fichaOnline.model.repositorys.PlayerSheetRepository;
+import br.com.walkito.fichaOnline.model.repositorys.RunRepository;
 import br.com.walkito.fichaOnline.model.specifications.PlayerSheetSpecifications;
 import br.com.walkito.fichaOnline.service.exception.ExceptionConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.Local;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.List;
 

@@ -1,18 +1,15 @@
 package br.com.walkito.fichaOnline.service;
 
-import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.model.entities.System;
-import br.com.walkito.fichaOnline.model.repository.SystemRepository;
+import br.com.walkito.fichaOnline.model.repositorys.SystemRepository;
 import br.com.walkito.fichaOnline.service.exception.ExceptionConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Service
 public class SystemService {
@@ -43,14 +40,13 @@ public class SystemService {
 
     public ResponseEntity<Object> editSystem(System system){
         try {
-            System actualSystem = repository.searchById(system.getId());
-            if (actualSystem == null){
+            //TODO verificar se existe o sistema
+            if (system == null){
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Sistema não encontrado",
                         "O sistema em questão não foi encontrado, por isso não foi possível realizara  edição.");
             } else {
-                BeanUtils.copyProperties(system, actualSystem, "runs");
-                return new ResponseEntity<>(repository.save(actualSystem), HttpStatus.OK);
+                return new ResponseEntity<>(repository.save(system), HttpStatus.OK);
             }
         } catch (Exception e){
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
