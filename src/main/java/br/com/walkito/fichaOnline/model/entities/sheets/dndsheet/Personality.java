@@ -27,10 +27,6 @@ public class Personality {
     @Size(max = 100)
     private String flaws;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
     public Personality() {
     }
 
@@ -71,14 +67,6 @@ public class Personality {
 
     public void setFlaws(String flaws) {
         this.flaws = flaws;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

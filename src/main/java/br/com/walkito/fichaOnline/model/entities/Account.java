@@ -49,7 +49,7 @@ public class Account {
     @JsonIgnore
     private List<Run> runs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "account", cascade = CascadeType.ALL,orphanRemoval = true)
+    @OneToMany(mappedBy = "account")
     @JsonIgnore
     private List<PlayerSheet> sheets = new ArrayList<>();
 

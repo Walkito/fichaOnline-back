@@ -71,10 +71,6 @@ public class SpellsLevelFive {
     @Column
     private boolean level5Prepared9;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
     public SpellsLevelFive() {
     }
 
@@ -259,14 +255,6 @@ public class SpellsLevelFive {
 
     public void setLevel5Prepared9(boolean level5Prepared9) {
         this.level5Prepared9 = level5Prepared9;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

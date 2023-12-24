@@ -23,11 +23,12 @@ public class PlayerSheet {
 
     @ManyToOne
     @JoinColumn(name = "run_id")
+    @NotNull
     private Run run;
 
-    @OneToMany(mappedBy = "playerSheet",cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonIgnore
-    private List<SheetDnD> sheetsDnd = new ArrayList<>();
+    @OneToOne
+    @JoinColumn(name = "sheetsDnD_id")
+    private SheetDnD sheetDnD;
 
     @Column
     private LocalDate dateCreation;
@@ -40,6 +41,10 @@ public class PlayerSheet {
         setAccount(account);
         setRun(run);
         setDateCreation(dateCreation);
+    }
+
+    public PlayerSheet(int id){
+
     }
 
     public Account getAccount() {
@@ -68,12 +73,12 @@ public class PlayerSheet {
         this.id = id;
     }
 
-    public List<SheetDnD> getSheetsDnd() {
-        return sheetsDnd;
+    public SheetDnD getSheetDnD() {
+        return sheetDnD;
     }
 
-    public void setSheetsDnd(SheetDnD sheetsDnd) {
-        this.sheetsDnd.add(sheetsDnd);
+    public void setSheetDnD(SheetDnD sheetDnD) {
+        this.sheetDnD = sheetDnD;
     }
 
     public LocalDate getDateCreation() {

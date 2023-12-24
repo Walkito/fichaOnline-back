@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 
 @Entity
 @Table(name = "dnd_cantrips")
-public class Cantrip {
+public class Cantrips {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -35,14 +35,10 @@ public class Cantrip {
     @Column(length = 20)
     private String cantrip8;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
-    public Cantrip(){
+    public Cantrips(){
     }
 
-    public Cantrip(String cantrip1, String cantrip2, String cantrip3, String cantrip4, String cantrip5, String cantrip6, String cantrip7, String cantrip8) {
+    public Cantrips(String cantrip1, String cantrip2, String cantrip3, String cantrip4, String cantrip5, String cantrip6, String cantrip7, String cantrip8) {
         this.cantrip1 = cantrip1;
         this.cantrip2 = cantrip2;
         this.cantrip3 = cantrip3;
@@ -115,14 +111,6 @@ public class Cantrip {
 
     public void setCantrip8(String cantrip8) {
         this.cantrip8 = cantrip8;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

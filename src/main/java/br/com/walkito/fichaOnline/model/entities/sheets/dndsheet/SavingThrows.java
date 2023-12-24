@@ -54,10 +54,6 @@ public class SavingThrows {
     @Column
     private boolean charismaProeficiency;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
     public SavingThrows() {
     }
 
@@ -170,14 +166,6 @@ public class SavingThrows {
 
     public void setCharismaProeficiency(boolean charismaProeficiency) {
         this.charismaProeficiency = charismaProeficiency;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

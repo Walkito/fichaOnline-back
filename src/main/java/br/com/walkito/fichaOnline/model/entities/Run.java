@@ -32,11 +32,11 @@ public class Run {
     @Column
     private LocalDate dateEnding;
 
-    @ManyToMany()
+    @ManyToMany
     @JsonIgnore
     private List<Account> accounts = new ArrayList<>();
 
-    @OneToMany(mappedBy = "run", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "run", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<PlayerSheet> sheets = new ArrayList<>();
 

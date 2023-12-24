@@ -77,10 +77,6 @@ public class PersonalInfos {
     @Size(max = 15)
     private String hair;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
     public PersonalInfos() {
     }
 
@@ -211,14 +207,6 @@ public class PersonalInfos {
 
     public void setHair(String hair) {
         this.hair = hair;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

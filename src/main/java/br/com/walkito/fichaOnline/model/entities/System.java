@@ -20,7 +20,7 @@ public class System {
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "system", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "system")
     @JsonIgnore
     private List<Run> runs = new ArrayList<>();
 

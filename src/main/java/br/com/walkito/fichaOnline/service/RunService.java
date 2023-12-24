@@ -12,7 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import javax.swing.text.html.Option;
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class RunService {
@@ -60,10 +62,13 @@ public class RunService {
 
     public ResponseEntity<Object> editRun(Run run){
         try{
-            Run actualRun = repository.searchById(run.getId());
-            BeanUtils.copyProperties(run, actualRun, new String[]{"accounts","sheets"});
-            repository.save(actualRun);
-            return new ResponseEntity<>(actualRun, HttpStatus.OK);
+            Optional<Run> actualRun = repository.findById(run.getId());
+            if(actualRun.isEmpty()){
+                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
+                        "Não foi possível editar esta Run!",
+                        "Não foi possível achar uma Run com o ID passado.");
+            }
+            return new ResponseEntity<>(repository.save(run), HttpStatus.OK);
         } catch (Exception e){
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
@@ -88,8 +93,8 @@ public class RunService {
 
             if(run.getId() < 1){
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
-                                                                      "Não foi possível excluir a conta",
-                                                                            "A conta não foi localizada por este ID informado.");
+                                      "Não foi possível excluir a conta",
+                                        "A conta não foi localizada por este ID informado.");
             }
             if(!run.getAccounts().isEmpty()){
                 for(Account account : run.getAccounts()){

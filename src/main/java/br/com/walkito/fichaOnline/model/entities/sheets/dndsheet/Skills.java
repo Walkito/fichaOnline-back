@@ -131,10 +131,6 @@ public class Skills {
     @Column
     private boolean survivalProeficiency;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
     public Skills() {
     }
 
@@ -445,14 +441,6 @@ public class Skills {
 
     public void setSurvivalProeficiency(boolean survivalProeficiency) {
         this.survivalProeficiency = survivalProeficiency;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

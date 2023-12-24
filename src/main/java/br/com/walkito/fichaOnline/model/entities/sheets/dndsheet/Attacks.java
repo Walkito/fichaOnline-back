@@ -112,10 +112,6 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType10;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
     public Attacks() {
     }
 
@@ -390,14 +386,6 @@ public class Attacks {
 
     public void setAtkDamageType10(String atkDamageType10) {
         this.atkDamageType10 = atkDamageType10;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

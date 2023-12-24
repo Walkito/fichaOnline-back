@@ -5,5 +5,4 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PersonalInfosRepository extends JpaRepository<PersonalInfos, Integer> {
 
-    public PersonalInfos searchById(int id);
 }

@@ -67,10 +67,6 @@ public class Attributes {
     @NotNull
     private int charismaMod;
 
-    @OneToOne
-    @JsonIgnore
-    private SheetDnD sheetDnD;
-
     public Attributes() {
     }
 
@@ -183,14 +179,6 @@ public class Attributes {
 
     public void setCharismaMod(int charismaMod) {
         this.charismaMod = charismaMod;
-    }
-
-    public SheetDnD getSheetDnD() {
-        return sheetDnD;
-    }
-
-    public void setSheetDnD(SheetDnD sheetDnD) {
-        this.sheetDnD = sheetDnD;
     }
 
     public int getId() {

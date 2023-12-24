@@ -56,18 +56,18 @@ public class SystemService {
 
     public ResponseEntity<Object> deleteSystem(int idSystem){
         try{
-            System system = repository.searchById(idSystem);
-            if(system.getId() < 1 ){
+            Optional<System> actualSystem = repository.findById(idSystem);
+            if(actualSystem.isEmpty() ){
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Não foi possível excluir o sistema.",
                         "O sistema não foi encontrado, o id passado não é válido.");
             }
-            if(!system.getRuns().isEmpty()){
+            if(!actualSystem.get().getRuns().isEmpty()){
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Existem Runs vinculadas a esse sistema, não foi possível excluir",
                         "Não é possivel excluir um sistema que tem runs vinculadas, pelo bem da consistência de dados.");
             }
-            repository.delete(system);
+            repository.delete(actualSystem.get());
             return new ResponseEntity<>("Sistema excluído com sucesso!", HttpStatus.OK);
         } catch (Exception e){
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));

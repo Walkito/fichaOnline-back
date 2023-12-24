@@ -6,6 +6,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "dnd_sheet")
 public class SheetDnD {
@@ -13,11 +16,11 @@ public class SheetDnD {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personal_infos_id")
     private PersonalInfos personalInfo;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "attributes_id")
     private Attributes attribute;
 
@@ -29,11 +32,11 @@ public class SheetDnD {
     @NotNull
     private int proeficiencyBonus;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "saving_throws_id")
     private SavingThrows savingThrow;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "skills_id")
     private Skills skill;
 
@@ -75,11 +78,11 @@ public class SheetDnD {
     @Min(0)
     private int failures;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "attacks_id")
     private Attacks attack;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "personality_id")
     private Personality personality;
 
@@ -124,56 +127,63 @@ public class SheetDnD {
     @Column(precision = 2)
     private int spellAtkBonus;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "cantrip_id")
-    private Cantrip cantrip;
+    private Cantrips cantrips;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_one")
     private SpellsLevelOne spellsLevelOne;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_two")
     private SpellsLevelTwo spellsLevelTwo;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_three")
     private SpellsLevelThree spellsLevelThree;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_four")
     private SpellsLevelFour spellsLevelFour;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_five")
     private SpellsLevelFive spellsLevelFive;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_six")
     private SpellsLevelSix spellsLevelSix;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_seven")
     private SpellsLevelSeven spellsLevelSeven;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_eigth")
     private SpellsLevelEigth spellsLevelEigth;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_nine")
     private SpellsLevelNine spellsLevelNine;
-
-    @ManyToOne
-    @JoinColumn(name = "players_sheets_id")
-    @JsonIgnore
-    private PlayerSheet playerSheet;
 
     public SheetDnD(){
 
     }
 
-    public SheetDnD(PersonalInfos personalInfo, Attributes attribute, int inspiration, int proeficiencyBonus, SavingThrows savingThrow, Skills skill, int armorClass, int initiative, String speed, int hpMax, int currentHp, int temporaryHp, String totalHitDice, String hitDice, int successes, int failures, Attacks attack, Personality personality, int passiveWisdom, String othersProficiencies, String equipment, String featuresTraits, String characterPictureFileName, String characterPictureAddress, String backstory, String spellcastingClass, String spellcastingHability, int spellDC, int spellAtkBonus, Cantrip cantrip, SpellsLevelOne spellsLevelOne, SpellsLevelTwo spellsLevelTwo, SpellsLevelThree spellsLevelThree, SpellsLevelFour spellsLevelFour, SpellsLevelFive spellsLevelFive, SpellsLevelSix spellsLevelSix, SpellsLevelSeven spellsLevelSeven, SpellsLevelEigth spellsLevelEigth, SpellsLevelNine spellsLevelNine, PlayerSheet playerSheet) {
+    public SheetDnD(PersonalInfos personalInfo, Attributes attribute, int inspiration,
+                    int proeficiencyBonus, SavingThrows savingThrow, Skills skill, int armorClass,
+                    int initiative, String speed, int hpMax, int currentHp, int temporaryHp,
+                    String totalHitDice, String hitDice, int successes, int failures, Attacks attack,
+                    Personality personality, int passiveWisdom, String othersProficiencies,
+                    String equipment, String featuresTraits, String characterPictureFileName,
+                    String characterPictureAddress, String backstory, String spellcastingClass,
+                    String spellcastingHability, int spellDC, int spellAtkBonus, Cantrips cantrips,
+                    SpellsLevelOne spellsLevelOne, SpellsLevelTwo spellsLevelTwo,
+                    SpellsLevelThree spellsLevelThree, SpellsLevelFour spellsLevelFour,
+                    SpellsLevelFive spellsLevelFive, SpellsLevelSix spellsLevelSix,
+                    SpellsLevelSeven spellsLevelSeven, SpellsLevelEigth spellsLevelEigth,
+                    SpellsLevelNine spellsLevelNine) {
         this.personalInfo = personalInfo;
         this.attribute = attribute;
         this.inspiration = inspiration;
@@ -203,7 +213,7 @@ public class SheetDnD {
         this.spellcastingHability = spellcastingHability;
         this.spellDC = spellDC;
         this.spellAtkBonus = spellAtkBonus;
-        this.cantrip = cantrip;
+        this.cantrips = cantrips;
         this.spellsLevelOne = spellsLevelOne;
         this.spellsLevelTwo = spellsLevelTwo;
         this.spellsLevelThree = spellsLevelThree;
@@ -213,7 +223,6 @@ public class SheetDnD {
         this.spellsLevelSeven = spellsLevelSeven;
         this.spellsLevelEigth = spellsLevelEigth;
         this.spellsLevelNine = spellsLevelNine;
-        setPlayerSheet(playerSheet);
     }
 
     public int getInspiration() {
@@ -400,13 +409,12 @@ public class SheetDnD {
         this.spellAtkBonus = spellAtkBonus;
     }
 
-    public PlayerSheet getPlayerSheet() {
-        return playerSheet;
+    public Cantrips getCantrips() {
+        return cantrips;
     }
 
-    public void setPlayerSheet(PlayerSheet playerSheet) {
-        this.playerSheet = playerSheet;
-        this.playerSheet.getSheetsDnd().add(this);
+    public void setCantrips(Cantrips cantrips) {
+        this.cantrips = cantrips;
     }
 
     public int getId() {
@@ -422,7 +430,6 @@ public class SheetDnD {
     }
 
     public void setPersonalInfo(PersonalInfos personalInfo) {
-        personalInfo.setSheetDnD(this);
         this.personalInfo = personalInfo;
     }
 
@@ -431,7 +438,6 @@ public class SheetDnD {
     }
 
     public void setAttribute(Attributes attribute) {
-        attribute.setSheetDnD(this);
         this.attribute = attribute;
     }
 
@@ -440,7 +446,6 @@ public class SheetDnD {
     }
 
     public void setSavingThrow(SavingThrows savingThrow) {
-        savingThrow.setSheetDnD(this);
         this.savingThrow = savingThrow;
     }
 
@@ -449,7 +454,6 @@ public class SheetDnD {
     }
 
     public void setSkill(Skills skill) {
-        skill.setSheetDnD(this);
         this.skill = skill;
     }
 
@@ -458,7 +462,6 @@ public class SheetDnD {
     }
 
     public void setAttack(Attacks attack) {
-        attack.setSheetDnD(this);
         this.attack = attack;
     }
 
@@ -467,7 +470,6 @@ public class SheetDnD {
     }
 
     public void setPersonality(Personality personality) {
-        personality.setSheetDnD(this);
         this.personality = personality;
     }
 
@@ -479,22 +481,12 @@ public class SheetDnD {
         this.spellcastingHability = spellcastingHability;
     }
 
-    public Cantrip getCantrip() {
-        return cantrip;
-    }
-
-    public void setCantrip(Cantrip cantrip) {
-        cantrip.setSheetDnD(this);
-        this.cantrip = cantrip;
-    }
-
     public SpellsLevelOne getSpellsLevelOne() {
 
         return spellsLevelOne;
     }
 
     public void setSpellsLevelOne(SpellsLevelOne spellsLevelOne) {
-        spellsLevelOne.setSheetDnD(this);
         this.spellsLevelOne = spellsLevelOne;
     }
 
@@ -504,7 +496,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelTwo(SpellsLevelTwo spellsLevelTwo) {
-        spellsLevelTwo.setSheetDnD(this);
         this.spellsLevelTwo = spellsLevelTwo;
     }
 
@@ -514,7 +505,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelThree(SpellsLevelThree spellsLevelThree) {
-        spellsLevelThree.setSheetDnD(this);
         this.spellsLevelThree = spellsLevelThree;
     }
 
@@ -523,7 +513,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelFour(SpellsLevelFour spellsLevelFour) {
-        spellsLevelFour.setSheetDnD(this);
         this.spellsLevelFour = spellsLevelFour;
     }
 
@@ -532,7 +521,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelFive(SpellsLevelFive spellsLevelFive) {
-        spellsLevelFive.setSheetDnD(this);
         this.spellsLevelFive = spellsLevelFive;
     }
 
@@ -541,7 +529,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelSix(SpellsLevelSix spellsLevelSix) {
-        spellsLevelSix.setSheetDnD(this);
         this.spellsLevelSix = spellsLevelSix;
     }
 
@@ -550,7 +537,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelSeven(SpellsLevelSeven spellsLevelSeven) {
-        spellsLevelSeven.setSheetDnD(this);
         this.spellsLevelSeven = spellsLevelSeven;
     }
 
@@ -559,7 +545,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelEigth(SpellsLevelEigth spellsLevelEigth) {
-        spellsLevelEigth.setSheetDnD(this);
         this.spellsLevelEigth = spellsLevelEigth;
     }
 
@@ -568,7 +553,6 @@ public class SheetDnD {
     }
 
     public void setSpellsLevelNine(SpellsLevelNine spellsLevelNine) {
-        spellsLevelNine.setSheetDnD(this);
         this.spellsLevelNine = spellsLevelNine;
     }
 }
