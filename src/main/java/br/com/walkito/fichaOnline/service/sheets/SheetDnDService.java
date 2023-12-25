@@ -16,8 +16,34 @@ public class SheetDnDService {
     @Autowired
     SheetDnDRepository repository;
 
+    public ResponseEntity<Object> getSheets(int id){
+        try{
+            return new ResponseEntity<>(repository.findById(id), HttpStatus.OK);
+        } catch (Exception e){
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
+                    e.getMessage(),
+                    Arrays.toString(e.getStackTrace()));
+        }
+    }
+
     public ResponseEntity<Object> createSheet(SheetDnD sheetDnD){
         try{
+            return new ResponseEntity<>(repository.save(sheetDnD), HttpStatus.OK);
+        } catch (Exception e){
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
+                    e.getMessage(),
+                    Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public ResponseEntity<Object> editSheet(SheetDnD sheetDnD){
+        try{
+            Optional<SheetDnD> actualSheetDnD = repository.findById(sheetDnD.getId());
+            if(actualSheetDnD.isEmpty()){
+                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
+                        "Impossível editar a ficha!",
+                        "Impossível editar a ficha pois não foi achado nenhuma ficha com esse ID.");
+            }
             return new ResponseEntity<>(repository.save(sheetDnD), HttpStatus.OK);
         } catch (Exception e){
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,

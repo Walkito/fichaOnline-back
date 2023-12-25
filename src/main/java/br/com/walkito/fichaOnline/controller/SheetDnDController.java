@@ -20,6 +20,11 @@ public class SheetDnDController {
         return service.createSheet(sheetDnD);
     }
 
+    @PutMapping(path = "/edit")
+    public ResponseEntity<Object> editSheet(@RequestBody @Valid SheetDnD sheetDnD){
+        return service.editSheet(sheetDnD);
+    }
+
     @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteSheet(@RequestParam("id") int id){
         return service.deleteSheet(id);
