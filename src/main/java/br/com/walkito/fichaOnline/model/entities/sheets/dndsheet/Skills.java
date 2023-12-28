@@ -83,6 +83,12 @@ public class Skills {
     private boolean medicineProeficiency;
 
     @Column(nullable = false, precision = 2)
+    private int nature;
+
+    @Column
+    private boolean natureProeficiency;
+
+    @Column(nullable = false, precision = 2)
     @NotNull
     private int perception;
 
@@ -134,7 +140,7 @@ public class Skills {
     public Skills() {
     }
 
-    public Skills(int acrobatics, boolean acrobaticsProeficiency, int animalHandling, boolean animalHandlingProeficiency, int arcana, boolean arcanaProeficiency, int athletics, boolean athleticsProeficiency, int deception, boolean deceptionProeficiency, int history, boolean historyProeficiency, int insight, boolean insightProeficiency, int intimidation, boolean intimidationProeficiency, int investigation, boolean investigationProeficiency, int medicine, boolean medicineProeficiency, int perception, boolean perceptionProeficiency, int performance, boolean performanceProeficiency, int persuasion, boolean persuasionProeficiency, int religion, boolean religionProeficiency, int sleightOf, boolean sleightOfProeficiency, int stealth, boolean stealthProeficiency, int survival, boolean survivalProeficiency) {
+    public Skills(int acrobatics, boolean acrobaticsProeficiency, int animalHandling, boolean animalHandlingProeficiency, int arcana, boolean arcanaProeficiency, int athletics, boolean athleticsProeficiency, int deception, boolean deceptionProeficiency, int history, boolean historyProeficiency, int insight, boolean insightProeficiency, int intimidation, boolean intimidationProeficiency, int investigation, boolean investigationProeficiency, int medicine, boolean medicineProeficiency, int nature, boolean natureProeficiency, int perception, boolean perceptionProeficiency, int performance, boolean performanceProeficiency, int persuasion, boolean persuasionProeficiency, int religion, boolean religionProeficiency, int sleightOf, boolean sleightOfProeficiency, int stealth, boolean stealthProeficiency, int survival, boolean survivalProeficiency) {
         this.acrobatics = acrobatics;
         this.acrobaticsProeficiency = acrobaticsProeficiency;
         this.animalHandling = animalHandling;
@@ -155,6 +161,8 @@ public class Skills {
         this.investigationProeficiency = investigationProeficiency;
         this.medicine = medicine;
         this.medicineProeficiency = medicineProeficiency;
+        this.nature = nature;
+        this.natureProeficiency = natureProeficiency;
         this.perception = perception;
         this.perceptionProeficiency = perceptionProeficiency;
         this.performance = performance;
@@ -169,6 +177,22 @@ public class Skills {
         this.stealthProeficiency = stealthProeficiency;
         this.survival = survival;
         this.survivalProeficiency = survivalProeficiency;
+    }
+
+    public int getNature() {
+        return nature;
+    }
+
+    public void setNature(int nature) {
+        this.nature = nature;
+    }
+
+    public boolean isNatureProeficiency() {
+        return natureProeficiency;
+    }
+
+    public void setNatureProeficiency(boolean natureProeficiency) {
+        this.natureProeficiency = natureProeficiency;
     }
 
     public int getAcrobatics() {
