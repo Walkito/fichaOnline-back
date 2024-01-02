@@ -15,6 +15,11 @@ public class SheetDnDController {
     @Autowired
     SheetDnDService service;
 
+    @GetMapping
+    public ResponseEntity<Object> getSheet(@RequestParam("id") int id){
+        return service.getSheet(id);
+    }
+
     @PostMapping(path = "/create")
     public ResponseEntity<Object> createSheet(@RequestBody @Valid SheetDnD sheetDnD){
         return service.createSheet(sheetDnD);

@@ -4,6 +4,7 @@ import br.com.walkito.fichaOnline.model.entities.sheets.SheetDnD;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -27,7 +28,8 @@ public class PlayerSheet {
     private Run run;
 
     @OneToOne
-    @JoinColumn(name = "sheetsDnD_id")
+    @JoinColumn(name = "sheetsDnD_id", unique = true)
+    @UniqueElements
     private SheetDnD sheetDnD;
 
     @Column

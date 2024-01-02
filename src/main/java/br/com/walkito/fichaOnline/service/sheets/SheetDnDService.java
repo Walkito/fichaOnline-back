@@ -16,7 +16,7 @@ public class SheetDnDService {
     @Autowired
     SheetDnDRepository repository;
 
-    public ResponseEntity<Object> getSheets(int id){
+    public ResponseEntity<Object> getSheet(int id){
         try{
             return new ResponseEntity<>(repository.findById(id), HttpStatus.OK);
         } catch (Exception e){

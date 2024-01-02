@@ -1,13 +1,8 @@
 package br.com.walkito.fichaOnline.model.entities.sheets;
 
-import br.com.walkito.fichaOnline.model.entities.PlayerSheet;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.*;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Table(name = "dnd_sheet")
@@ -68,15 +63,23 @@ public class SheetDnD {
     @Column(length = 6)
     private String hitDice;
 
-    @Column(precision = 1)
-    @Max(3)
-    @Min(0)
-    private int successes;
+    @Column
+    private boolean successOne;
 
-    @Column(precision = 1)
-    @Max(3)
-    @Min(0)
-    private int failures;
+    @Column
+    private boolean successTwo;
+
+    @Column
+    private boolean successThree;
+
+    @Column
+    private boolean failOne;
+
+    @Column
+    private boolean failTwo;
+
+    @Column
+    private boolean failThree;
 
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "attacks_id")
@@ -89,16 +92,16 @@ public class SheetDnD {
     @Column(precision = 2)
     private int passiveWisdom;
 
-    @Column(length = 300)
-    @Size(max = 300)
+    @Column(columnDefinition = "TEXT")
     private String othersProficiencies;
 
-    @Column(length = 300)
-    @Size(max = 300)
+    @Column(columnDefinition = "TEXT")
+    private String traits;
+
+    @Column(columnDefinition = "TEXT")
     private String equipment;
 
-    @Column(length = 300)
-    @Size(max = 300)
+    @Column(columnDefinition = "TEXT")
     private String featuresTraits;
 
     @Column(length = 50)
@@ -109,7 +112,7 @@ public class SheetDnD {
     @Size(max = 1000)
     private String characterPictureAddress;
 
-    @Column
+    @Column(columnDefinition = "TEXT")
     private String backstory;
 
     @Column(length = 25)
@@ -174,10 +177,10 @@ public class SheetDnD {
     public SheetDnD(PersonalInfos personalInfo, Attributes attribute, int inspiration,
                     int proeficiencyBonus, SavingThrows savingThrow, Skills skill, int armorClass,
                     int initiative, String speed, int hpMax, int currentHp, int temporaryHp,
-                    String totalHitDice, String hitDice, int successes, int failures, Attacks attack,
-                    Personality personality, int passiveWisdom, String othersProficiencies,
-                    String equipment, String featuresTraits, String characterPictureFileName,
-                    String characterPictureAddress, String backstory, String spellcastingClass,
+                    String totalHitDice, String hitDice, boolean successOne, boolean successTwo, boolean successThree,
+                    boolean failOne, boolean failTwo, boolean failThree, Attacks attack, Personality personality,
+                    int passiveWisdom, String othersProficiencies, String traits, String equipment, String featuresTraits,
+                    String characterPictureFileName, String characterPictureAddress, String backstory, String spellcastingClass,
                     String spellcastingHability, int spellDC, int spellAtkBonus, Cantrips cantrips,
                     SpellsLevelOne spellsLevelOne, SpellsLevelTwo spellsLevelTwo,
                     SpellsLevelThree spellsLevelThree, SpellsLevelFour spellsLevelFour,
@@ -198,12 +201,17 @@ public class SheetDnD {
         this.temporaryHp = temporaryHp;
         this.totalHitDice = totalHitDice;
         this.hitDice = hitDice;
-        this.successes = successes;
-        this.failures = failures;
+        this.successOne = successOne;
+        this.successTwo = successTwo;
+        this.successThree = successThree;
+        this.failOne = failOne;
+        this.failTwo = failTwo;
+        this.failThree = failThree;
         this.attack = attack;
         this.personality = personality;
         this.passiveWisdom = passiveWisdom;
         this.othersProficiencies = othersProficiencies;
+        this.traits = traits;
         this.equipment = equipment;
         this.featuresTraits = featuresTraits;
         this.characterPictureFileName = characterPictureFileName;
@@ -223,6 +231,62 @@ public class SheetDnD {
         this.spellsLevelSeven = spellsLevelSeven;
         this.spellsLevelEigth = spellsLevelEigth;
         this.spellsLevelNine = spellsLevelNine;
+    }
+
+    public String getTraits() {
+        return traits;
+    }
+
+    public void setTraits(String traits) {
+        this.traits = traits;
+    }
+
+    public boolean isSuccessOne() {
+        return successOne;
+    }
+
+    public void setSuccessOne(boolean successOne) {
+        this.successOne = successOne;
+    }
+
+    public boolean isSuccessTwo() {
+        return successTwo;
+    }
+
+    public void setSuccessTwo(boolean successTwo) {
+        this.successTwo = successTwo;
+    }
+
+    public boolean isSuccessThree() {
+        return successThree;
+    }
+
+    public void setSuccessThree(boolean successThree) {
+        this.successThree = successThree;
+    }
+
+    public boolean isFailOne() {
+        return failOne;
+    }
+
+    public void setFailOne(boolean failOne) {
+        this.failOne = failOne;
+    }
+
+    public boolean isFailTwo() {
+        return failTwo;
+    }
+
+    public void setFailTwo(boolean failTwo) {
+        this.failTwo = failTwo;
+    }
+
+    public boolean isFailThree() {
+        return failThree;
+    }
+
+    public void setFailThree(boolean failThree) {
+        this.failThree = failThree;
     }
 
     public int getInspiration() {
@@ -303,22 +367,6 @@ public class SheetDnD {
 
     public void setHitDice(String hitDice) {
         this.hitDice = hitDice;
-    }
-
-    public int getSuccesses() {
-        return successes;
-    }
-
-    public void setSuccesses(int successes) {
-        this.successes = successes;
-    }
-
-    public int getFailures() {
-        return failures;
-    }
-
-    public void setFailures(int failures) {
-        this.failures = failures;
     }
 
     public int getPassiveWisdom() {

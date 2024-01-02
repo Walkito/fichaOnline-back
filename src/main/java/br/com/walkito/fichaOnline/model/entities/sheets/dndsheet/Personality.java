@@ -12,19 +12,16 @@ public class Personality {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 100)
+    @Column(columnDefinition = "TEXT")
     private String personalityTraits;
 
-    @Column(length = 100)
-    @Size(max = 100)
+    @Column(columnDefinition = "TEXT")
     private String ideals;
 
-    @Column(length = 100)
-    @Size(max = 100)
+    @Column(columnDefinition = "TEXT")
     private String bonds;
 
-    @Column(length = 100)
-    @Size(max = 100)
+    @Column(columnDefinition = "TEXT")
     private String flaws;
 
     public Personality() {
