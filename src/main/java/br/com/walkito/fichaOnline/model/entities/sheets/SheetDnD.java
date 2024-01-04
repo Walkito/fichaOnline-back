@@ -119,8 +119,8 @@ public class SheetDnD {
     @Size(max = 25)
     private String spellcastingClass;
 
-    @Column(length = 20)
-    @Size(max = 20)
+    @Column(length = 30)
+    @Size(max = 30)
     private String spellcastingHability;
 
     @Column(precision = 2)
@@ -431,14 +431,6 @@ public class SheetDnD {
 
     public void setSpellcastingClass(String spellcastingClass) {
         this.spellcastingClass = spellcastingClass;
-    }
-
-    public String getSpellcastingAbility() {
-        return spellcastingHability;
-    }
-
-    public void setSpellcastingAbility(String spellcastingAbility) {
-        this.spellcastingHability = spellcastingAbility;
     }
 
     public int getSpellDC() {

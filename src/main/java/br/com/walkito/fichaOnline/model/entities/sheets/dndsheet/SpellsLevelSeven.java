@@ -11,61 +11,61 @@ public class SpellsLevelSeven {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level7TotalSlots;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level7SlotsExpended;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot1;
 
     @Column
     private boolean level7Prepared1;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot2;
 
     @Column
     private boolean level7Prepared2;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot3;
 
     @Column
     private boolean level7Prepared3;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot4;
 
     @Column
     private boolean level7Prepared4;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot5;
 
     @Column
     private boolean level7Prepared5;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot6;
 
     @Column
     private boolean level7Prepared6;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot7;
 
     @Column
     private boolean level7Prepared7;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot8;
 
     @Column
     private boolean level7Prepared8;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level7Slot9;
 
     @Column

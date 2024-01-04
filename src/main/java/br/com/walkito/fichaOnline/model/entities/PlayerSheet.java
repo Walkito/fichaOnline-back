@@ -29,7 +29,6 @@ public class PlayerSheet {
 
     @OneToOne
     @JoinColumn(name = "sheetsDnD_id", unique = true)
-    @UniqueElements
     private SheetDnD sheetDnD;
 
     @Column

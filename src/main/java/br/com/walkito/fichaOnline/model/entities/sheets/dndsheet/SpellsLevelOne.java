@@ -12,79 +12,79 @@ public class SpellsLevelOne {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level1TotalSlots;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level1SlotsExpended;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot1;
 
     @Column
     private boolean level1Prepared1;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot2;
 
     @Column
     private boolean level1Prepared2;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot3;
 
     @Column
     private boolean level1Prepared3;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot4;
 
     @Column
     private boolean level1Prepared4;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot5;
 
     @Column
     private boolean level1Prepared5;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot6;
 
     @Column
     private boolean level1Prepared6;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot7;
 
     @Column
     private boolean level1Prepared7;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot8;
 
     @Column
     private boolean level1Prepared8;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot9;
 
     @Column
     private boolean level1Prepared9;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot10;
 
     @Column
     private boolean level1Prepared10;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot11;
 
     @Column
     private boolean level1Prepared11;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level1Slot12;
 
     @Column

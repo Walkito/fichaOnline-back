@@ -11,85 +11,85 @@ public class SpellsLevelThree {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level3TotalSlots;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level3SlotsExpended;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot1;
 
     @Column
     private boolean level3Prepared1;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot2;
 
     @Column
     private boolean level3Prepared2;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot3;
 
     @Column
     private boolean level3Prepared3;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot4;
 
     @Column
     private boolean level3Prepared4;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot5;
 
     @Column
     private boolean level3Prepared5;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot6;
 
     @Column
     private boolean level3Prepared6;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot7;
 
     @Column
     private boolean level3Prepared7;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot8;
 
     @Column
     private boolean level3Prepared8;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot9;
 
     @Column
     private boolean level3Prepared9;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot10;
 
     @Column
     private boolean level3Prepared10;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot11;
 
     @Column
     private boolean level3Prepared11;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot12;
 
     @Column
     private boolean level3Prepared12;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level3Slot13;
 
     @Column

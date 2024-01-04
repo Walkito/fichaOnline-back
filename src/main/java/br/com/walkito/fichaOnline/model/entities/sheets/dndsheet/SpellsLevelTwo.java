@@ -11,85 +11,85 @@ public class SpellsLevelTwo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level2TotalSlots;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level2SlotsExpended;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot1;
 
     @Column
     private boolean level2Prepared1;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot2;
 
     @Column
     private boolean level2Prepared2;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot3;
 
     @Column
     private boolean level2Prepared3;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot4;
 
     @Column
     private boolean level2Prepared4;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot5;
 
     @Column
     private boolean level2Prepared5;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot6;
 
     @Column
     private boolean level2Prepared6;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot7;
 
     @Column
     private boolean level2Prepared7;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot8;
 
     @Column
     private boolean level2Prepared8;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot9;
 
     @Column
     private boolean level2Prepared9;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot10;
 
     @Column
     private boolean level2Prepared10;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot11;
 
     @Column
     private boolean level2Prepared11;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot12;
 
     @Column
     private boolean level2Prepared12;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level2Slot13;
 
     @Column

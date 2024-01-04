@@ -11,49 +11,49 @@ public class SpellsLevelEigth {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level8TotalSlots;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level8SlotsExpended;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level8Slot1;
 
     @Column
     private boolean level8Prepared1;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level8Slot2;
 
     @Column
     private boolean level8Prepared2;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level8Slot3;
 
     @Column
     private boolean level8Prepared3;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level8Slot4;
 
     @Column
     private boolean level8Prepared4;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level8Slot5;
 
     @Column
     private boolean level8Prepared5;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level8Slot6;
 
     @Column
     private boolean level8Prepared6;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level8Slot7;
 
     @Column

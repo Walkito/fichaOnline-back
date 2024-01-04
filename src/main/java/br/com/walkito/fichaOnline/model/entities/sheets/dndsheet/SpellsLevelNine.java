@@ -11,49 +11,49 @@ public class SpellsLevelNine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level9TotalSlots;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level9SlotsExpended;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level9Slot1;
 
     @Column
     private boolean level9Prepared1;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level9Slot2;
 
     @Column
     private boolean level9Prepared2;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level9Slot3;
 
     @Column
     private boolean level9Prepared3;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level9Slot4;
 
     @Column
     private boolean level9Prepared4;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level9Slot5;
 
     @Column
     private boolean level9Prepared5;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level9Slot6;
 
     @Column
     private boolean level9Prepared6;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level9Slot7;
 
     @Column

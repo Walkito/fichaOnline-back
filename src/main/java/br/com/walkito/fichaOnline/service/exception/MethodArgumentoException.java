@@ -14,7 +14,7 @@ public class MethodArgumentoException extends ExceptionConstructor {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         HttpStatus errorStatus = HttpStatus.BAD_REQUEST;
-        String errorMessage = "Erro ao validar os campos.";
+        String errorMessage = "Erro de validação!";
         StringBuilder errorDetails = new StringBuilder();
         List<FieldError> errorsList = ex.getBindingResult().getFieldErrors();
 

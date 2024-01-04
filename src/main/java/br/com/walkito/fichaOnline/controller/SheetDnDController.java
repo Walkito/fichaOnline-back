@@ -25,6 +25,11 @@ public class SheetDnDController {
         return service.createSheet(sheetDnD);
     }
 
+    @PostMapping(path = "/create/updateAttributes")
+    public ResponseEntity<Object> updateAttributesInCreation(@RequestBody SheetDnD sheetDnD){
+        return service.updateAttributesInCreation(sheetDnD);
+    }
+
     @PutMapping(path = "/edit")
     public ResponseEntity<Object> editSheet(@RequestBody @Valid SheetDnD sheetDnD){
         return service.editSheet(sheetDnD);

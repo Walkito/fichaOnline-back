@@ -11,61 +11,61 @@ public class SpellsLevelFive {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level5TotalSlots;
 
-    @Column(precision = 1)
+    @Column(precision = 2)
     private int level5SlotsExpended;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot1;
 
     @Column
     private boolean level5Prepared1;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot2;
 
     @Column
     private boolean level5Prepared2;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot3;
 
     @Column
     private boolean level5Prepared3;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot4;
 
     @Column
     private boolean level5Prepared4;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot5;
 
     @Column
     private boolean level5Prepared5;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot6;
 
     @Column
     private boolean level5Prepared6;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot7;
 
     @Column
     private boolean level5Prepared7;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot8;
 
     @Column
     private boolean level5Prepared8;
 
-    @Column(length = 20)
+    @Column(length = 60)
     private String level5Slot9;
 
     @Column
