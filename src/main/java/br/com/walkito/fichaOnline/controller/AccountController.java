@@ -28,6 +28,12 @@ public class AccountController {
         return service.getLinkedRuns(idAccount);
     }
 
+    @GetMapping(path = "/verifyEmailUser")
+    public ResponseEntity<Object> verifyEmailUser(@RequestParam(value = "email") String email,
+                                                  @RequestParam(value = "user") String user){
+        return service.verifyEmailUser();
+    }
+
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> createAccount(@RequestBody @Valid Account account){
         return service.createAccount(account);

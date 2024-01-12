@@ -57,11 +57,11 @@ public class PersonalInfos {
     @Min(0)
     private int age;
 
-    @Column(precision = 3)
+    @Column(precision = 3, scale = 2)
     @Min(0)
     private double height;
 
-    @Column(precision = 5)
+    @Column(precision = 5, scale = 2)
     @Min(0)
     private double weight;
 

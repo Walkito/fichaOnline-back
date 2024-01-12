@@ -75,6 +75,14 @@ public class AccountService {
         }
     }
 
+    public ResponseEntity<Object> verifyEmailUser(String email, String user){
+        try{
+
+        } catch (Exception e){
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+        }
+    }
+
     public ResponseEntity<Object> deleteAccount(int idAccount){
         try{
             Account account = repository.searchById(idAccount);

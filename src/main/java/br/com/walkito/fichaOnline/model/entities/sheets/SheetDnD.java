@@ -124,7 +124,6 @@ public class SheetDnD {
     private String spellcastingHability;
 
     @Column(precision = 2)
-    @Min(1)
     private int spellDC;
 
     @Column(precision = 2)

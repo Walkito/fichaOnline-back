@@ -12,8 +12,8 @@ public class Attacks {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName1;
 
     @Column(precision = 2)
@@ -22,8 +22,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType1;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName2;
 
     @Column(precision = 2)
@@ -32,8 +32,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType2;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName3;
 
     @Column(precision = 2)
@@ -42,8 +42,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType3;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName4;
 
     @Column(precision = 2)
@@ -52,8 +52,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType4;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName5;
 
     @Column(precision = 2)
@@ -62,8 +62,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType5;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName6;
 
     @Column(precision = 2)
@@ -72,8 +72,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType6;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName7;
 
     @Column(precision = 2)
@@ -82,8 +82,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType7;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName8;
 
     @Column(precision = 2)
@@ -92,8 +92,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType8;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName9;
 
     @Column(precision = 2)
@@ -102,8 +102,8 @@ public class Attacks {
     @Column(length = 20)
     private String atkDamageType9;
 
-    @Column(length = 15)
-    @Size(max = 15)
+    @Column(length = 25)
+    @Size(max = 25)
     private String atkName10;
 
     @Column(precision = 2)
