@@ -31,7 +31,7 @@ public class AccountController {
     @GetMapping(path = "/verifyEmailUser")
     public ResponseEntity<Object> verifyEmailUser(@RequestParam(value = "email") String email,
                                                   @RequestParam(value = "user") String user){
-        return service.verifyEmailUser();
+        return service.verifyEmailUser(email, user);
     }
 
     @PostMapping(path = "/create", produces = "application/json")

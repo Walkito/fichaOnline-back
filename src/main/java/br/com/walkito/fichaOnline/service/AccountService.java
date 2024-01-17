@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Optional;
 
 @Service
 public class AccountService {
@@ -77,9 +78,24 @@ public class AccountService {
 
     public ResponseEntity<Object> verifyEmailUser(String email, String user){
         try{
+            Optional<Account> accountEmail = repository.findByEmail(email);
+            Optional<Account> accountUser = repository.findByUser(user);
 
+            if(accountEmail.isPresent() && accountUser.isPresent()){
+                return new ResponseEntity<>(1, HttpStatus.OK);
+            }
+            if(accountEmail.isPresent()){
+                return new ResponseEntity<>(2, HttpStatus.OK);
+            }
+            if(accountUser.isPresent()){
+                return new ResponseEntity<>(3, HttpStatus.OK);
+            }
+            if (!Utils.emailValidator(email)) {
+                return new ResponseEntity<>(4, HttpStatus.OK);
+            }
+            return new ResponseEntity<>(0, HttpStatus.OK);
         } catch (Exception e){
-            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage());
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
     }
 
