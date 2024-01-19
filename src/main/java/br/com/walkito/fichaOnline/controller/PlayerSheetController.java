@@ -30,4 +30,9 @@ public class PlayerSheetController {
     public ResponseEntity<Object> editSheet(@RequestBody PlayerSheet sheet){
         return service.editSheet(sheet);
     }
+
+    @DeleteMapping(path = "/delete")
+    public ResponseEntity<Object> deleteSheet(@RequestParam(value = "idSheet") int idSheet){
+        return service.deleteSheet(idSheet);
+    }
 }

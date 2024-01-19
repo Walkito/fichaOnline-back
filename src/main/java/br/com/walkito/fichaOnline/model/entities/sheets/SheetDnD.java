@@ -1,5 +1,6 @@
 package br.com.walkito.fichaOnline.model.entities.sheets;
 
+import br.com.walkito.fichaOnline.model.entities.PlayerSheet;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
@@ -168,7 +169,7 @@ public class SheetDnD {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "spell_level_nine")
     private SpellsLevelNine spellsLevelNine;
-
+    
     public SheetDnD(){
 
     }

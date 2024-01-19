@@ -34,9 +34,4 @@ public class SheetDnDController {
     public ResponseEntity<Object> editSheet(@RequestBody @Valid SheetDnD sheetDnD){
         return service.editSheet(sheetDnD);
     }
-
-    @DeleteMapping(path = "/delete")
-    public ResponseEntity<Object> deleteSheet(@RequestParam("id") int id){
-        return service.deleteSheet(id);
-    }
 }

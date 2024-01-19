@@ -104,7 +104,7 @@ public class RunService {
             }
             repository.save(run);
             repository.delete(run);
-            return new ResponseEntity<>("Run excluída com sucesso!", HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e){
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
                                                                   e.getMessage(),

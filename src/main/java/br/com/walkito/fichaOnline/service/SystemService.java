@@ -68,7 +68,7 @@ public class SystemService {
                         "Não é possivel excluir um sistema que tem runs vinculadas, pelo bem da consistência de dados.");
             }
             repository.delete(actualSystem.get());
-            return new ResponseEntity<>("Sistema excluído com sucesso!", HttpStatus.OK);
+            return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e){
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }

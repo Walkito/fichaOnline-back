@@ -27,8 +27,8 @@ public class PlayerSheet {
     @NotNull
     private Run run;
 
-    @OneToOne
-    @JoinColumn(name = "sheetsDnD_id", unique = true)
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "sheetDnD_id", referencedColumnName = "id", unique = true)
     private SheetDnD sheetDnD;
 
     @Column
@@ -38,9 +38,10 @@ public class PlayerSheet {
 
     }
 
-    public PlayerSheet(Account account, Run run, LocalDate dateCreation){
+    public PlayerSheet(Account account, Run run, SheetDnD sheetDnD, LocalDate dateCreation){
         setAccount(account);
         setRun(run);
+        setSheetDnD(sheetDnD);
         setDateCreation(dateCreation);
     }
 

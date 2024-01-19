@@ -57,23 +57,6 @@ public class SheetDnDService {
         }
     }
 
-    public ResponseEntity<Object> deleteSheet(int id){
-        try{
-            Optional<SheetDnD> sheetDnD = repository.findById(id);
-            if(sheetDnD.isEmpty()){
-                return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
-                        "Não foi possível excluir a ficha!",
-                        "Ficha não existe.");
-            }
-            repository.delete(sheetDnD.get());
-            return new ResponseEntity<>("Ficha excluída", HttpStatus.OK);
-        } catch (Exception e){
-            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
-                    e.getMessage(),
-                    Arrays.toString(e.getStackTrace()));
-        }
-    }
-
     public ResponseEntity<Object> updateAttributesInCreation(SheetDnD sheetDnD){
         businessRules(sheetDnD);
         return new ResponseEntity<>(sheetDnD, HttpStatus.OK);

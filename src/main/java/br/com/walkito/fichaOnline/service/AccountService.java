@@ -113,7 +113,7 @@ public class AccountService {
                 account.setSituation("I");
                 repository.save(account);
             }
-                return new ResponseEntity<>("Conta Excluída com Sucesso!",HttpStatus.OK);
+                return new ResponseEntity<>(true,HttpStatus.OK);
         } catch (Exception e){
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
