@@ -47,7 +47,8 @@ public class PlayerSheetService {
     public ResponseEntity<Object> linkSheet(PlayerSheet sheet){
         try{
             if(sheet.getAccount().getId() > 0  || sheet.getRun().getId() > 0){
-                return new ResponseEntity<>(repository.save(sheet), HttpStatus.OK);
+                repository.save(sheet);
+                return new ResponseEntity<>(true, HttpStatus.OK);
             } else {
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Impossível criar a ficha!",

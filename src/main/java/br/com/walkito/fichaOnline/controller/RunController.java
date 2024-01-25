@@ -8,6 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/run")
 public class RunController {
@@ -19,10 +21,21 @@ public class RunController {
         return service.getRuns();
     }
 
+    @GetMapping(path = "/runsFiltered")
+    public ResponseEntity<Object> getRunsFiltered(@RequestParam(value = "filter") List<String> status,
+                                                  @RequestParam(value = "accountID") int accountID){
+        return service.getRunsFiltered(status, accountID);
+    }
+
     @GetMapping(path = "/linkedAccounts")
     public ResponseEntity<Object> getLinkedAccounts(@RequestParam(value = "idRun", defaultValue = "0")
                                                 int idRun){
         return service.getLinkedAccounts(idRun);
+    }
+
+    @GetMapping(path = "/getMaster")
+    public ResponseEntity<Object> getMasterRun(@RequestParam(value = "id") int id){
+        return service.getMasterRun(id);
     }
 
     @PostMapping(path = "/register")

@@ -1,6 +1,7 @@
 package br.com.walkito.fichaOnline.service;
 
 import br.com.walkito.fichaOnline.model.dtos.RunAccountDTO;
+import br.com.walkito.fichaOnline.model.dtos.RunDTO;
 import br.com.walkito.fichaOnline.model.entities.Account;
 import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.model.repositorys.AccountRepository;
@@ -14,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import javax.swing.text.html.Option;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -109,6 +111,36 @@ public class RunService {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
                                                                   e.getMessage(),
                                                                     Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public ResponseEntity<Object> getMasterRun(int id){
+        try{
+            Optional<Account> masterAccount = accountRepository.findById(id);
+            if(masterAccount.isPresent()){
+                String masterName = masterAccount.get().getName() + " " + masterAccount.get().getLastName();
+                RunDTO runDTO = new RunDTO(masterName);
+                return new ResponseEntity<>(runDTO, HttpStatus.OK);
+            } else {
+                return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
+                        "Conta do Mestre não localizada",
+                        "A conta do Mestre da Run não foi localizada.");
+            }
+        } catch (Exception e){
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
+                    e.getMessage(),
+                    Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public ResponseEntity<Object> getRunsFiltered(List<String> status, int accountID){
+        try{
+            List<Run> runs = repository.findAllRunsFilter(status, accountID);
+            return new ResponseEntity<>(runs, HttpStatus.OK);
+        } catch (Exception e){
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
+                    e.getMessage(),
+                    Arrays.toString(e.getStackTrace()));
         }
     }
 }

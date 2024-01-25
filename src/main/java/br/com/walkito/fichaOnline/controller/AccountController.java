@@ -1,12 +1,9 @@
 package br.com.walkito.fichaOnline.controller;
 
 import br.com.walkito.fichaOnline.model.entities.Account;
-import br.com.walkito.fichaOnline.service.exception.GenericException;
-import br.com.walkito.fichaOnline.service.AccountService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,6 +17,11 @@ public class AccountController {
                                           @RequestParam(name = "email") String email,
                                           @RequestParam(name = "password") String password){
         return service.doLogin(user,email,password);
+    }
+
+    @GetMapping(path = "/accountInfos")
+    public ResponseEntity<Object> getAccountInfos(@RequestParam(name = "id") int id){
+        return service.getAccountInfos(id);
     }
 
     @GetMapping(path = "/linkedRuns")

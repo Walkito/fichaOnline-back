@@ -32,6 +32,14 @@ public class Run {
     @Column
     private LocalDate dateEnding;
 
+    @Column(length = 20)
+    @Size(max = 50)
+    private String status;
+
+    @Column(nullable = false)
+    @NotNull
+    private int masterId;
+
     @ManyToMany
     @JsonIgnore
     private List<Account> accounts = new ArrayList<>();
@@ -48,14 +56,25 @@ public class Run {
 
     }
 
-    public Run(String campaign, System system, String inicio, String fim) {
+    public Run(String campaign, System system, String inicio, String fim, int masterId) {
         this.campaign = campaign;
         setSystem(system);
+
 
         LocalDate datainicio = inicio.isEmpty() ? LocalDate.now() : LocalDate.parse(inicio);
         LocalDate dataFim = fim.isEmpty() ? null : LocalDate.parse(fim);
         setDateBeginning(datainicio);
         setDateEnding(dataFim);
+
+        setMasterId(masterId);
+    }
+
+    public int getMasterId() {
+        return masterId;
+    }
+
+    public void setMasterId(int masterId) {
+        this.masterId = masterId;
     }
 
     public List<PlayerSheet> getSheets() {
@@ -73,6 +92,14 @@ public class Run {
     public void setAccounts(Account account) {
         account.getRuns().add(this);
         this.accounts.add(account);
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getCampaign() {

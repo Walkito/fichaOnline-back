@@ -40,10 +40,10 @@ public class Account {
     private String password;
 
     @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'J'")
-    private String type;
+    private String type = "J";
 
     @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'A'")
-    private String situation;
+    private String situation = "A";
 
     @ManyToMany(mappedBy = "accounts")
     @JsonIgnore
@@ -60,7 +60,7 @@ public class Account {
 
     }
 
-    public Account(String name, String lastName, String user, String email, String password, String type, String situation) {
+    public Account(String name, String lastName, String user, String email, String password) {
         this.name = name;
         this.lastName = lastName;
         this.user = user;
