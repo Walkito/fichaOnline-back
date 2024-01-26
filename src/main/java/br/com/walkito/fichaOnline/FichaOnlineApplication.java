@@ -1,5 +1,6 @@
 package br.com.walkito.fichaOnline;
 
+import br.com.walkito.fichaOnline.config.S3Config;
 import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -8,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class FichaOnlineApplication {
 
 	public static void main(String[] args) {
-		Dotenv.configure().load();
 		SpringApplication.run(FichaOnlineApplication.class, args);
 	}
 

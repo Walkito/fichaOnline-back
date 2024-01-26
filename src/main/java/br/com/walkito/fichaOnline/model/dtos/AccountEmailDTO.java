@@ -10,8 +10,8 @@ public class AccountEmailDTO extends AccountDTO {
         this.email = email;
     }
 
-    public AccountEmailDTO(int id, String name, String lastName, String user, String type, String email) {
-        super(id, name, lastName, user, type);
+    public AccountEmailDTO(int id, String name, String lastName, String user, String type, String profilePictureName, String email) {
+        super(id, name, lastName, user, type, profilePictureName);
         this.email = email;
     }
 

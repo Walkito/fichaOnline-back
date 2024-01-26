@@ -12,15 +12,26 @@ public class AccountDTO {
 
     private String type;
 
+    private String profilePictureName;
+
     public AccountDTO() {
     }
 
-    public AccountDTO(int id, String name, String lastName, String user, String type) {
+    public AccountDTO(int id, String name, String lastName, String user, String type, String profilePictureName) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.user = user;
         this.type = type;
+        this.profilePictureName = profilePictureName;
+    }
+
+    public String getProfilePictureName() {
+        return profilePictureName;
+    }
+
+    public void setProfilePictureName(String profilePictureName) {
+        this.profilePictureName = profilePictureName;
     }
 
     public int getId() {

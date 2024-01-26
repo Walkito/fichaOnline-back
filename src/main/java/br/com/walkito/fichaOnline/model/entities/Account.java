@@ -45,6 +45,9 @@ public class Account {
     @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'A'")
     private String situation = "A";
 
+    @Column(columnDefinition = "TEXT")
+    private String profilePictureName;
+
     @ManyToMany(mappedBy = "accounts")
     @JsonIgnore
     private List<Run> runs = new ArrayList<>();
@@ -66,8 +69,14 @@ public class Account {
         this.user = user;
         this.email = email;
         this.password = password;
-        this.type = type;
-        this.situation = situation;
+    }
+
+    public String getProfilePictureName() {
+        return profilePictureName;
+    }
+
+    public void setProfilePictureName(String profilePictureName) {
+        this.profilePictureName = profilePictureName;
     }
 
     public List<Run> getRuns() {
