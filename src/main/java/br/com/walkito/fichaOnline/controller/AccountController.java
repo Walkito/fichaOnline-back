@@ -30,6 +30,11 @@ public class AccountController {
         return service.getAccountInfos(id);
     }
 
+    @GetMapping(path = "/accountInfos/user")
+    public ResponseEntity<Object> getAccountInfosByUser(@RequestParam(name = "user") String user){
+        return service.getAccountInfosByUser(user);
+    }
+
     @GetMapping(path = "/linkedRuns")
     public ResponseEntity<Object> getLinkedRuns(@RequestParam(value = "idAccount", defaultValue = "0")
                                                 int idAccount){
@@ -38,8 +43,9 @@ public class AccountController {
 
     @GetMapping(path = "/verifyEmailUser")
     public ResponseEntity<Object> verifyEmailUser(@RequestParam(value = "email") String email,
-                                                  @RequestParam(value = "user") String user){
-        return service.verifyEmailUser(email, user);
+                                                  @RequestParam(value = "user") String user,
+                                                  @RequestParam(value = "id") int id){
+        return service.verifyEmailUser(email, user, id);
     }
 
     @GetMapping(path = "/download")
@@ -55,8 +61,8 @@ public class AccountController {
 
     @PostMapping(path = "/upload")
     public ResponseEntity<Object> uploadProfileImage(@RequestBody ImageDTO image){
-        service.saveFileName(image.getId(), image.getFileName());
-        return fileService.uploadFile(image, "profile");
+        String olderFileName = service.saveFileName(image.getId(), image.getFileName());
+        return fileService.uploadFile(olderFileName,"profile", image);
     }
 
     @PutMapping(path = "/edit")

@@ -1,12 +1,12 @@
 package br.com.walkito.fichaOnline.model.dtos;
 
-public class RunDTO {
+public class RunMasterNameDTO {
     private String masterName;
 
-    public RunDTO() {
+    public RunMasterNameDTO() {
     }
 
-    public RunDTO(String masterName) {
+    public RunMasterNameDTO(String masterName) {
         this.masterName = masterName;
     }
 

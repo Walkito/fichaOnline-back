@@ -10,10 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.core.ResponseInputStream;
 import software.amazon.awssdk.core.sync.RequestBody;
-import software.amazon.awssdk.services.s3.model.GetObjectRequest;
-import software.amazon.awssdk.services.s3.model.GetObjectResponse;
-import software.amazon.awssdk.services.s3.model.PutObjectRequest;
-import software.amazon.awssdk.services.s3.model.PutObjectResponse;
+import software.amazon.awssdk.services.s3.model.*;
 
 import java.io.ByteArrayInputStream;
 import java.io.File;
@@ -22,13 +19,22 @@ import java.nio.ByteBuffer;
 import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Base64;
+import java.util.Objects;
 
 @Service
 public class FileService {
     private final String BUCKET = "imagensfichaonline";
 
-    public ResponseEntity<Object> uploadFile(ImageDTO image, String folder) {
+    public ResponseEntity<Object> uploadFile(String olderFileName, String folder, ImageDTO image) {
         try {
+            if (checkExistingFile(folder, image.getFileName())) {
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+
+            if (!deleteFile(folder, olderFileName)){
+                return new ResponseEntity<>(false, HttpStatus.INTERNAL_SERVER_ERROR);
+            }
+
             RequestBody requestBody = transformFile(image);
             PutObjectRequest request = buildPut(folder + "/" + image.getFileName());
             S3Config.s3Client.putObject(request, requestBody);
@@ -56,32 +62,55 @@ public class FileService {
         }
     }
 
-    private byte[] decodeBase64(String imageInBase64){
+    private boolean deleteFile(String folder, String fileName) {
+        try{
+            DeleteObjectRequest request = buildDelete(folder + "/" + fileName);
+            S3Config.s3Client.deleteObject(request);
+            return true;
+        } catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    private byte[] decodeBase64(String imageInBase64) {
         return Base64.getMimeDecoder().decode(imageInBase64);
     }
 
-    private RequestBody transformFile(ImageDTO image){
+    private RequestBody transformFile(ImageDTO image) {
         ByteBuffer byteBuffer = ByteBuffer.wrap(decodeBase64(image.getImageB64()));
         return RequestBody.fromByteBuffer(byteBuffer);
     }
 
-    private PutObjectRequest buildPut(String fileName){
+    private DeleteObjectRequest buildDelete(String fileName){
+        return DeleteObjectRequest.builder()
+                .bucket(BUCKET)
+                .key(fileName)
+                .build();
+    }
+
+    private PutObjectRequest buildPut(String fileName) {
         return PutObjectRequest.builder()
                 .bucket(BUCKET)
                 .key(fileName)
                 .build();
     }
 
-    private GetObjectRequest buildGet(String fileName){
+    private GetObjectRequest buildGet(String fileName) {
         return GetObjectRequest.builder()
                 .bucket(BUCKET)
                 .key(fileName)
                 .build();
     }
 
-    private HttpHeaders buildHeader(){
+    private HttpHeaders buildHeader() {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.IMAGE_PNG);
         return headers;
+    }
+
+    public boolean checkExistingFile(String folder, String fileName) {
+        ResponseEntity<Object> obj = downloadFile(folder, fileName);
+        return obj.getStatusCode() == HttpStatus.OK;
     }
 }

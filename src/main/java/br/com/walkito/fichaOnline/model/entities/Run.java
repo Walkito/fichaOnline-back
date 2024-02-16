@@ -40,13 +40,39 @@ public class Run {
     @NotNull
     private int masterId;
 
+    @Column
+    @NotNull
+    private int sessionNumber;
+
+    @Column(columnDefinition = "TEXT")
+    private String annotationOne;
+
+    @Column(columnDefinition = "TEXT")
+    private String annotationTwo;
+
+    @Column(columnDefinition = "TEXT")
+    private String annotationThree;
+
+    @Column(columnDefinition = "TEXT")
+    private String annotationFour;
+
+    @Column(columnDefinition = "TEXT")
+    private String annotationFive;
+
+    @Column(columnDefinition = "TEXT")
+    private String annotationSix;
+
     @ManyToMany
-    @JsonIgnore
+    @JsonProperty
     private List<Account> accounts = new ArrayList<>();
 
     @OneToMany(mappedBy = "run", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<PlayerSheet> sheets = new ArrayList<>();
+
+    @OneToMany(mappedBy = "run", cascade = CascadeType.ALL)
+    @JsonIgnore
+    private List<Npc> npcs = new ArrayList<>();
 
     public Run(){
 
@@ -56,8 +82,9 @@ public class Run {
 
     }
 
-    public Run(String campaign, System system, String inicio, String fim, int masterId) {
+    public Run(String campaign, System system, String inicio, String fim, int masterId, int sessionNumber) {
         this.campaign = campaign;
+        this.sessionNumber = sessionNumber;
         setSystem(system);
 
 
@@ -67,6 +94,70 @@ public class Run {
         setDateEnding(dataFim);
 
         setMasterId(masterId);
+    }
+
+    public int getSessionNumber() {
+        return sessionNumber;
+    }
+
+    public void setSessionNumber(int sessionNumber) {
+        this.sessionNumber = sessionNumber;
+    }
+
+    public String getAnnotationOne() {
+        return annotationOne;
+    }
+
+    public void setAnnotationOne(String annotationOne) {
+        this.annotationOne = annotationOne;
+    }
+
+    public String getAnnotationTwo() {
+        return annotationTwo;
+    }
+
+    public void setAnnotationTwo(String annotationTwo) {
+        this.annotationTwo = annotationTwo;
+    }
+
+    public String getAnnotationThree() {
+        return annotationThree;
+    }
+
+    public void setAnnotationThree(String annotationThree) {
+        this.annotationThree = annotationThree;
+    }
+
+    public String getAnnotationFour() {
+        return annotationFour;
+    }
+
+    public void setAnnotationFour(String annotationFour) {
+        this.annotationFour = annotationFour;
+    }
+
+    public String getAnnotationFive() {
+        return annotationFive;
+    }
+
+    public void setAnnotationFive(String annotationFive) {
+        this.annotationFive = annotationFive;
+    }
+
+    public String getAnnotationSix() {
+        return annotationSix;
+    }
+
+    public void setAnnotationSix(String annotationSix) {
+        this.annotationSix = annotationSix;
+    }
+
+    public List<Npc> getNpcs() {
+        return npcs;
+    }
+
+    public void setNpcs(List<Npc> npcs) {
+        this.npcs = npcs;
     }
 
     public int getMasterId() {
@@ -89,9 +180,18 @@ public class Run {
         return accounts;
     }
 
-    public void setAccounts(Account account) {
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
+    }
+
+    public void setLinkAccount(Account account) {
         account.getRuns().add(this);
         this.accounts.add(account);
+    }
+
+    public void unlinkAccount(Account account){
+        account.getRuns().remove(this);
+        this.accounts.remove(account);
     }
 
     public String getStatus() {

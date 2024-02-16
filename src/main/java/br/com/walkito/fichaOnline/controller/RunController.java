@@ -34,8 +34,18 @@ public class RunController {
     }
 
     @GetMapping(path = "/getMaster")
-    public ResponseEntity<Object> getMasterRun(@RequestParam(value = "id") int id){
+    public ResponseEntity<Object> getMasterName(@RequestParam(value = "id") int id){
         return service.getMasterRun(id);
+    }
+
+    @GetMapping(path = "/masterRuns")
+    public ResponseEntity<Object> getMasterRuns(@RequestParam(value = "id") int id){
+        return service.getMasterRuns(id);
+    }
+
+    @GetMapping
+    public ResponseEntity<Object> getRun(@RequestParam(value = "id") int id){
+        return service.getRun(id);
     }
 
     @PostMapping(path = "/register")
@@ -52,6 +62,11 @@ public class RunController {
     @PutMapping(path = "/edit")
     public ResponseEntity<Object> editRun(@RequestBody @Valid Run run){
         return service.editRun(run);
+    }
+
+    @DeleteMapping(path = "/unlinkAccount")
+    public ResponseEntity<Object> unlinkAccount(@RequestParam @Valid RunAccountDTO ura){
+        return service.unlinkAccount(ura);
     }
 
     @DeleteMapping(path = "/delete")

@@ -1,5 +1,6 @@
 package br.com.walkito.fichaOnline.service.sheets;
 
+import br.com.walkito.fichaOnline.model.dtos.ImageDTO;
 import br.com.walkito.fichaOnline.model.entities.sheets.SheetDnD;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.Attributes;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.SavingThrows;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,56 +21,92 @@ public class SheetDnDService {
     @Autowired
     SheetDnDRepository repository;
 
-    public ResponseEntity<Object> getSheet(int id){
-        try{
+    public ResponseEntity<Object> getSheet(int id) {
+        try {
             return new ResponseEntity<>(repository.findById(id), HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
                     e.getMessage(),
                     Arrays.toString(e.getStackTrace()));
         }
     }
 
-    public ResponseEntity<Object> createSheet(SheetDnD sheetDnD){
-        try{
+    public ResponseEntity<Object> getSheets(List<Integer> ids){
+        try {
+            return new ResponseEntity<>(repository.findAllById(ids), HttpStatus.OK);
+        } catch (Exception e){
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
+                    e.getMessage(),
+                    Arrays.toString(e.getStackTrace()));
+        }
+    }
+    public ResponseEntity<Object> createSheet(SheetDnD sheetDnD) {
+        try {
             businessRules(sheetDnD);
             return new ResponseEntity<>(repository.save(sheetDnD), HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
                     e.getMessage(),
                     Arrays.toString(e.getStackTrace()));
         }
     }
 
-    public ResponseEntity<Object> editSheet(SheetDnD sheetDnD){
-        try{
+    public ResponseEntity<Object> editSheet(SheetDnD sheetDnD) {
+        try {
             Optional<SheetDnD> actualSheetDnD = repository.findById(sheetDnD.getId());
-            if(actualSheetDnD.isEmpty()){
+            if (actualSheetDnD.isEmpty()) {
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Impossível editar a ficha!",
                         "Impossível editar a ficha pois não foi achado nenhuma ficha com esse ID.");
             }
             businessRules(sheetDnD);
             return new ResponseEntity<>(repository.save(sheetDnD), HttpStatus.OK);
-        } catch (Exception e){
+        } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
                     e.getMessage(),
                     Arrays.toString(e.getStackTrace()));
         }
     }
 
-    public ResponseEntity<Object> updateAttributesInCreation(SheetDnD sheetDnD){
+    public ResponseEntity<Object> updateAttributesInCreation(SheetDnD sheetDnD) {
         businessRules(sheetDnD);
         return new ResponseEntity<>(sheetDnD, HttpStatus.OK);
     }
 
-    private void businessRules(SheetDnD sheet){
+    public String getPictureName(int id) {
+        try {
+            Optional<SheetDnD> sheet = repository.findById(id);
+            if(sheet.isPresent()){
+                return sheet.get().getCharacterPictureFileName();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    public String saveFileName(ImageDTO image){
+        try{
+            Optional<SheetDnD> sheet = repository.findById(image.getId());
+            if (sheet.isPresent()){
+                String olderFileName = sheet.get().getCharacterPictureFileName();
+                sheet.get().setCharacterPictureFileName(image.getFileName());
+                repository.save(sheet.get());
+                return olderFileName;
+            }
+        } catch (Exception e){
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    private void businessRules(SheetDnD sheet) {
         sheet.setAttribute(attributesRules(sheet));
         sheet.setSavingThrow(savingThrowsRules(sheet));
         sheet.setSkill(skillsRules(sheet));
     }
 
-    private Skills skillsRules(SheetDnD sheetDnD){
+    private Skills skillsRules(SheetDnD sheetDnD) {
         Attributes attributes = sheetDnD.getAttribute();
         int proficiencyBonus = sheetDnD.getProeficiencyBonus();
 
@@ -129,7 +167,7 @@ public class SheetDnDService {
         return sheetDnD.getSkill();
     }
 
-    private Attributes attributesRules(SheetDnD sheetDnD){
+    private Attributes attributesRules(SheetDnD sheetDnD) {
         int strength = sheetDnD.getAttribute().getStrength();
         int dexterity = sheetDnD.getAttribute().getDexterity();
         int constitution = sheetDnD.getAttribute().getConstitution();
@@ -147,12 +185,12 @@ public class SheetDnDService {
         return sheetDnD.getAttribute();
     }
 
-    private int calculateAttribute(int value){
+    private int calculateAttribute(int value) {
         double attributeValue = Math.ceil((double) (value - (1)) / 2);
         return (int) attributeValue - 5;
     }
 
-    private SavingThrows savingThrowsRules(SheetDnD sheetDnD){
+    private SavingThrows savingThrowsRules(SheetDnD sheetDnD) {
         SavingThrows savingThrows = sheetDnD.getSavingThrow();
         Attributes attributes = sheetDnD.getAttribute();
         int proeficiencyBonus = sheetDnD.getProeficiencyBonus();
@@ -178,7 +216,7 @@ public class SheetDnDService {
         return savingThrows;
     }
 
-    private int calculateProficiencyNewValue(boolean proeficiency, int attributeValue, int proeficiencyBonus){
+    private int calculateProficiencyNewValue(boolean proeficiency, int attributeValue, int proeficiencyBonus) {
         return proeficiency ? proeficiencyBonus + attributeValue : attributeValue;
     }
 }

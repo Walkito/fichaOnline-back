@@ -105,13 +105,8 @@ public class SheetDnD {
     @Column(columnDefinition = "TEXT")
     private String featuresTraits;
 
-    @Column(length = 50)
-    @Size(max = 50)
+    @Column(columnDefinition = "TEXT")
     private String characterPictureFileName;
-
-    @Column(length = 1000)
-    @Size(max = 1000)
-    private String characterPictureAddress;
 
     @Column(columnDefinition = "TEXT")
     private String backstory;
@@ -180,7 +175,7 @@ public class SheetDnD {
                     String totalHitDice, String hitDice, boolean successOne, boolean successTwo, boolean successThree,
                     boolean failOne, boolean failTwo, boolean failThree, Attacks attack, Personality personality,
                     int passiveWisdom, String othersProficiencies, String traits, String equipment, String featuresTraits,
-                    String characterPictureFileName, String characterPictureAddress, String backstory, String spellcastingClass,
+                    String characterPictureFileName, String backstory, String spellcastingClass,
                     String spellcastingHability, int spellDC, int spellAtkBonus, Cantrips cantrips,
                     SpellsLevelOne spellsLevelOne, SpellsLevelTwo spellsLevelTwo,
                     SpellsLevelThree spellsLevelThree, SpellsLevelFour spellsLevelFour,
@@ -215,7 +210,6 @@ public class SheetDnD {
         this.equipment = equipment;
         this.featuresTraits = featuresTraits;
         this.characterPictureFileName = characterPictureFileName;
-        this.characterPictureAddress = characterPictureAddress;
         this.backstory = backstory;
         this.spellcastingClass = spellcastingClass;
         this.spellcastingHability = spellcastingHability;
@@ -407,14 +401,6 @@ public class SheetDnD {
 
     public void setCharacterPictureFileName(String characterPictureFileName) {
         this.characterPictureFileName = characterPictureFileName;
-    }
-
-    public String getCharacterPictureAddress() {
-        return characterPictureAddress;
-    }
-
-    public void setCharacterPictureAddress(String characterPictureAddress) {
-        this.characterPictureAddress = characterPictureAddress;
     }
 
     public String getBackstory() {

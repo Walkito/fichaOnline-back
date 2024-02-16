@@ -4,6 +4,7 @@ import br.com.walkito.fichaOnline.Utils;
 import br.com.walkito.fichaOnline.config.S3Config;
 import br.com.walkito.fichaOnline.model.dtos.AccountDTO;
 import br.com.walkito.fichaOnline.model.entities.Account;
+import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.service.exception.ExceptionConstructor;
 import br.com.walkito.fichaOnline.model.repositorys.AccountRepository;
 import org.modelmapper.ModelMapper;
@@ -14,6 +15,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Optional;
 
 @Service
@@ -45,6 +48,21 @@ public class AccountService {
     public ResponseEntity<Object> getAccountInfos(int id) {
         try {
             Optional<Account> account = repository.findById(id);
+            if (account.isPresent()) {
+                return new ResponseEntity<>(convertDTO(account.get()), HttpStatus.OK);
+            } else {
+                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
+                        "Conta não encontrada.",
+                        "Conta não foi encontrada com o ID passado.");
+            }
+        } catch (Exception e) {
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public ResponseEntity<Object> getAccountInfosByUser(String user) {
+        try {
+            Optional<Account> account = repository.findByUser(user);
             if (account.isPresent()) {
                 return new ResponseEntity<>(convertDTO(account.get()), HttpStatus.OK);
             } else {
@@ -107,6 +125,7 @@ public class AccountService {
                         "Não existem Runs vinculados a essa conta",
                         "Não foi possivel encontrar runs vinculadas com essa conta, a lista retornou vazia!");
             } else {
+                account.getRuns().sort(Comparator.comparingLong(Run::getId));
                 return new ResponseEntity<>(account.getRuns(), HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -114,9 +133,9 @@ public class AccountService {
         }
     }
 
-    public ResponseEntity<Object> verifyEmailUser(String email, String user) {
+    public ResponseEntity<Object> verifyEmailUser(String email, String user, int id) {
         try {
-            Optional<Account> accountEmail = repository.findByEmail(email);
+            Optional<Account> accountEmail = repository.searchByEmail(email, id);
             Optional<Account> accountUser = repository.findByUser(user);
 
             if (accountEmail.isPresent() && accountUser.isPresent()) {
@@ -158,16 +177,19 @@ public class AccountService {
         }
     }
 
-    public void saveFileName(int id, String fileName) {
+    public String saveFileName(int id, String fileName) {
         try {
             Optional<Account> account = repository.findById(id);
-            if(account.isPresent()){
+            if (account.isPresent()) {
+                String olderFileName = account.get().getProfilePictureName();
                 account.get().setProfilePictureName(fileName);
                 repository.save(account.get());
+                return olderFileName;
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
+        return null;
     }
 
     private AccountDTO convertDTO(Account account) {
