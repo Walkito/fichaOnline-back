@@ -1,15 +1,19 @@
 package br.com.walkito.fichaOnline.service.sheets;
 
 import br.com.walkito.fichaOnline.model.dtos.ImageDTO;
+import br.com.walkito.fichaOnline.model.dtos.PayloadMessageDTO;
+import br.com.walkito.fichaOnline.model.entities.PlayerSheet;
 import br.com.walkito.fichaOnline.model.entities.sheets.SheetDnD;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.Attributes;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.SavingThrows;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.Skills;
 import br.com.walkito.fichaOnline.model.repositorys.sheets.SheetDnDRepository;
+import br.com.walkito.fichaOnline.service.PlayerSheetService;
 import br.com.walkito.fichaOnline.service.exception.ExceptionConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
@@ -20,6 +24,12 @@ import java.util.Optional;
 public class SheetDnDService {
     @Autowired
     SheetDnDRepository repository;
+
+    @Autowired
+    SimpMessagingTemplate messagingTemplate;
+
+    @Autowired
+    PlayerSheetService playerSheetService;
 
     public ResponseEntity<Object> getSheet(int id) {
         try {
@@ -54,12 +64,15 @@ public class SheetDnDService {
     public ResponseEntity<Object> editSheet(SheetDnD sheetDnD) {
         try {
             Optional<SheetDnD> actualSheetDnD = repository.findById(sheetDnD.getId());
+            PlayerSheet sheetInfos = playerSheetService.getSheet(sheetDnD.getId());
+
             if (actualSheetDnD.isEmpty()) {
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Impossível editar a ficha!",
                         "Impossível editar a ficha pois não foi achado nenhuma ficha com esse ID.");
             }
             businessRules(sheetDnD);
+            messagingTemplate.convertAndSend("/topic/SheetEdit", new PayloadMessageDTO("Uma ficha foi atualizada", sheetInfos.getRun().getId()));
             return new ResponseEntity<>(repository.save(sheetDnD), HttpStatus.OK);
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,

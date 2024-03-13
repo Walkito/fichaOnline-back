@@ -28,6 +28,16 @@ public class PlayerSheetService {
     @Autowired
     RunRepository runRepository;
 
+    public PlayerSheet getSheet(int idSheet){
+        try{
+            Optional<PlayerSheet> sheet = repository.findBySheetDnDId(idSheet);
+            return sheet.orElse(null);
+        } catch (Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
     public ResponseEntity<Object> getSheets(int idAccount, int idRun){
         try{
             Specification<PlayerSheet> specs = PlayerSheetSpecifications.filterByAccountId(idAccount)

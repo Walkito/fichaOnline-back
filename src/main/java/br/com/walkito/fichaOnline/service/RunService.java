@@ -3,6 +3,7 @@ package br.com.walkito.fichaOnline.service;
 import br.com.walkito.fichaOnline.model.dtos.RunAccountDTO;
 import br.com.walkito.fichaOnline.model.dtos.RunMasterNameDTO;
 import br.com.walkito.fichaOnline.model.entities.Account;
+import br.com.walkito.fichaOnline.model.entities.PlayerSheet;
 import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.model.repositorys.AccountRepository;
 import br.com.walkito.fichaOnline.model.repositorys.RunRepository;
@@ -82,19 +83,32 @@ public class RunService {
         try {
             Run run = repository.searchById(lra.getIdRun());
             Account account = accountRepository.searchById(lra.getIdAccount());
+
+            if(run.getAccounts().contains(account)){
+                return new ResponseEntity<>(false, HttpStatus.OK);
+            }
+
             run.setLinkAccount(account);
             repository.save(run);
             accountRepository.save(account);
+
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
     }
 
-    public ResponseEntity<Object> unlinkAccount(RunAccountDTO ura){
+    public ResponseEntity<Object> unlinkAccount(int idRun, int idAccount){
         try {
-            Run run = repository.searchById(ura.getIdRun());
-            Account account = accountRepository.searchById(ura.getIdAccount());
+            Run run = repository.searchById(idRun);
+            Account account = accountRepository.searchById(idAccount);
+
+            for(PlayerSheet sheet : run.getSheets()){
+                if(sheet.getAccount().equals(account)){
+                 return new ResponseEntity<>(false, HttpStatus.OK);
+                }
+            }
+
             run.unlinkAccount(account);
             repository.save(run);
             accountRepository.save(account);

@@ -17,60 +17,61 @@ public class RunController {
     RunService service;
 
     @GetMapping(path = "/runs")
-    public ResponseEntity<Object> getRuns(){
+    public ResponseEntity<Object> getRuns() {
         return service.getRuns();
     }
 
     @GetMapping(path = "/runsFiltered")
     public ResponseEntity<Object> getRunsFiltered(@RequestParam(value = "filter") List<String> status,
-                                                  @RequestParam(value = "accountID") int accountID){
+                                                  @RequestParam(value = "accountID") int accountID) {
         return service.getRunsFiltered(status, accountID);
     }
 
     @GetMapping(path = "/linkedAccounts")
     public ResponseEntity<Object> getLinkedAccounts(@RequestParam(value = "idRun", defaultValue = "0")
-                                                int idRun){
+                                                    int idRun) {
         return service.getLinkedAccounts(idRun);
     }
 
     @GetMapping(path = "/getMaster")
-    public ResponseEntity<Object> getMasterName(@RequestParam(value = "id") int id){
+    public ResponseEntity<Object> getMasterName(@RequestParam(value = "id") int id) {
         return service.getMasterRun(id);
     }
 
     @GetMapping(path = "/masterRuns")
-    public ResponseEntity<Object> getMasterRuns(@RequestParam(value = "id") int id){
+    public ResponseEntity<Object> getMasterRuns(@RequestParam(value = "id") int id) {
         return service.getMasterRuns(id);
     }
 
     @GetMapping
-    public ResponseEntity<Object> getRun(@RequestParam(value = "id") int id){
+    public ResponseEntity<Object> getRun(@RequestParam(value = "id") int id) {
         return service.getRun(id);
     }
 
     @PostMapping(path = "/register")
     @ResponseBody
-    public ResponseEntity<Object> registerRun(@RequestBody @Valid Run run){
+    public ResponseEntity<Object> registerRun(@RequestBody @Valid Run run) {
         return service.registerRun(run);
     }
 
     @PostMapping(path = "/linkAccount")
-    public ResponseEntity<Object> linkAccount(@RequestBody @Valid RunAccountDTO lra){
+    public ResponseEntity<Object> linkAccount(@RequestBody @Valid RunAccountDTO lra) {
         return service.linkAccount(lra);
     }
 
     @PutMapping(path = "/edit")
-    public ResponseEntity<Object> editRun(@RequestBody @Valid Run run){
+    public ResponseEntity<Object> editRun(@RequestBody @Valid Run run) {
         return service.editRun(run);
     }
 
     @DeleteMapping(path = "/unlinkAccount")
-    public ResponseEntity<Object> unlinkAccount(@RequestParam @Valid RunAccountDTO ura){
-        return service.unlinkAccount(ura);
+    public ResponseEntity<Object> unlinkAccount(@RequestParam(value = "idRun") int idRun,
+                                                @RequestParam(value = "idAccount") int idAccount) {
+        return service.unlinkAccount(idRun, idAccount);
     }
 
     @DeleteMapping(path = "/delete")
-    public ResponseEntity<Object> deleteRun(@RequestParam("idRun") int idRun){
+    public ResponseEntity<Object> deleteRun(@RequestParam("idRun") int idRun) {
         return service.deleteRun(idRun);
     }
 }
