@@ -3,6 +3,7 @@ package br.com.walkito.fichaOnline.service;
 import br.com.walkito.fichaOnline.model.dtos.RunAccountDTO;
 import br.com.walkito.fichaOnline.model.dtos.RunMasterNameDTO;
 import br.com.walkito.fichaOnline.model.entities.Account;
+import br.com.walkito.fichaOnline.model.entities.Music;
 import br.com.walkito.fichaOnline.model.entities.PlayerSheet;
 import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.model.repositorys.AccountRepository;
@@ -73,6 +74,11 @@ public class RunService {
                         "Não foi possível editar esta Run!",
                         "Não foi possível achar uma Run com o ID passado.");
             }
+
+            for(Music music: run.getMusics()){
+                music.setRun(run);
+            }
+
             return new ResponseEntity<>(repository.save(run), HttpStatus.OK);
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));

@@ -62,6 +62,10 @@ public class Run {
     @Column(columnDefinition = "TEXT")
     private String annotationSix;
 
+    @Column(length = 10)
+    @Size(max = 10)
+    private String discordBotCommand;
+
     @ManyToMany
     @JsonProperty
     private List<Account> accounts = new ArrayList<>();
@@ -73,6 +77,9 @@ public class Run {
     @OneToMany(mappedBy = "run", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<Npc> npcs = new ArrayList<>();
+
+    @OneToMany(mappedBy = "run", cascade = CascadeType.ALL)
+    private List<Music> musics = new ArrayList<>();
 
     public Run(){
 
@@ -241,5 +248,21 @@ public class Run {
 
     public void setDateEnding(LocalDate dateEnding) {
         this.dateEnding = dateEnding;
+    }
+
+    public List<Music> getMusics() {
+        return musics;
+    }
+
+    public void setMusics(List<Music> musics) {
+        this.musics = musics;
+    }
+
+    public String getDiscordBotCommand() {
+        return discordBotCommand;
+    }
+
+    public void setDiscordBotCommand(String discordBotCommand) {
+        this.discordBotCommand = discordBotCommand;
     }
 }
