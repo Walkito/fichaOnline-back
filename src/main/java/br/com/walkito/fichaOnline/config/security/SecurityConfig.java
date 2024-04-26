@@ -30,7 +30,8 @@ public class SecurityConfig {
 
     private static final String[] PUBLIC_MATCHERS = {
             "/api/account/authLogin",
-            "/api/account/create"
+            "/api/account/create",
+            "/api/account/verifyEmailUser"
     };
 
     @Bean

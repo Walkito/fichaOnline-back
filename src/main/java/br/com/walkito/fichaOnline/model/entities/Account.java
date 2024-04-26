@@ -50,7 +50,7 @@ public class Account implements UserDetails {
     private UserRole role;
 
     @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'A'")
-    private String situation = "A";
+    private String situation;
 
     @Column(columnDefinition = "TEXT")
     private String profilePictureName;

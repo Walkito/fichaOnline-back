@@ -107,8 +107,7 @@ public class AccountService{
                         "O E-mail informado não é válido. Por favor, inserir um e-mail válido");
             }
 
-            account.setRole(UserRole.PLAYER);
-
+            account.setSituation("A");
             String encryptedPassword = new BCryptPasswordEncoder().encode(account.getPassword());
             account.setPassword(encryptedPassword);
             repository.save(account);
