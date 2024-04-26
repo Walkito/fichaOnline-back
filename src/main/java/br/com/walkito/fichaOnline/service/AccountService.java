@@ -1,45 +1,58 @@
 package br.com.walkito.fichaOnline.service;
 
 import br.com.walkito.fichaOnline.Utils;
-import br.com.walkito.fichaOnline.config.S3Config;
+import br.com.walkito.fichaOnline.model.UserRole;
 import br.com.walkito.fichaOnline.model.dtos.AccountDTO;
+import br.com.walkito.fichaOnline.model.dtos.LoginResponse;
 import br.com.walkito.fichaOnline.model.entities.Account;
 import br.com.walkito.fichaOnline.model.entities.Run;
 import br.com.walkito.fichaOnline.service.exception.ExceptionConstructor;
 import br.com.walkito.fichaOnline.model.repositorys.AccountRepository;
+import br.com.walkito.fichaOnline.service.security.TokenService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Comparator;
 import java.util.Optional;
 
 @Service
-public class AccountService {
+public class AccountService{
     @Autowired
     AccountRepository repository;
 
     @Autowired
     ModelMapper modelMapper;
 
-    public ResponseEntity<Object> doLogin(String user, String email, String password) {
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private TokenService tokenService;
+
+    public ResponseEntity<Object> doLogin(String user, String password) {
         try {
-            Account account = repository.getLogin(user, email, password);
-            if (account != null && account.getSituation().equals("I")) {
-                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
-                        "A Conta está Inativa.", "Não foi possível fazer o login pois a conta está inativa");
+            var usernamePassword = new UsernamePasswordAuthenticationToken(user, password);
+            var auth = this.authenticationManager.authenticate(usernamePassword);
+
+            Account account = (Account) auth.getPrincipal();
+
+            var token = tokenService.generateToken(account);
+
+            if (account.getSituation().equals("I")) {
+                return ResponseEntity.badRequest().build();
             }
-            if (account != null) {
-                return new ResponseEntity<>(convertDTO(account), HttpStatus.OK);
-            } else {
-                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
-                        "Usuário/E-mail ou Senha incorretos.", "Login não encontrado ");
-            }
+
+            LoginResponse login = new LoginResponse(token, account);
+
+            return ResponseEntity.ok(login);
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
@@ -51,9 +64,7 @@ public class AccountService {
             if (account.isPresent()) {
                 return new ResponseEntity<>(convertDTO(account.get()), HttpStatus.OK);
             } else {
-                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
-                        "Conta não encontrada.",
-                        "Conta não foi encontrada com o ID passado.");
+                return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
@@ -83,9 +94,9 @@ public class AccountService {
             }
         } catch (Exception e) {
             e.printStackTrace();
-            return "Conta não encontrado";
+            return "";
         }
-        return "Conta não encontrado";
+        return "";
     }
 
     public ResponseEntity<Object> createAccount(Account account) {
@@ -95,7 +106,14 @@ public class AccountService {
                         "E-mail não é válido",
                         "O E-mail informado não é válido. Por favor, inserir um e-mail válido");
             }
-            return new ResponseEntity<>(repository.save(account), HttpStatus.OK);
+
+            account.setRole(UserRole.PLAYER);
+
+            String encryptedPassword = new BCryptPasswordEncoder().encode(account.getPassword());
+            account.setPassword(encryptedPassword);
+            repository.save(account);
+
+            return ResponseEntity.ok().build();
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
@@ -110,6 +128,9 @@ public class AccountService {
             }
             Account actualAccount = repository.searchById(account.getId());
             BeanUtils.copyProperties(account, actualAccount, new String[]{"runs", "sheets"});
+
+            String encryptedPassword = new BCryptPasswordEncoder().encode(actualAccount.getPassword());
+            actualAccount.setPassword(encryptedPassword);
             repository.save(actualAccount);
             return new ResponseEntity<>(actualAccount, HttpStatus.OK);
         } catch (Exception e) {

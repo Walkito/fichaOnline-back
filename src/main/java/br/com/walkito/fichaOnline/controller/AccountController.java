@@ -1,7 +1,7 @@
 package br.com.walkito.fichaOnline.controller;
 
-import br.com.walkito.fichaOnline.model.dtos.AccountDTO;
 import br.com.walkito.fichaOnline.model.dtos.ImageDTO;
+import br.com.walkito.fichaOnline.model.dtos.LoginDTO;
 import br.com.walkito.fichaOnline.model.entities.Account;
 import br.com.walkito.fichaOnline.service.AccountService;
 import br.com.walkito.fichaOnline.service.FileService;
@@ -18,11 +18,9 @@ public class AccountController {
     @Autowired
     FileService fileService;
 
-    @GetMapping(path = "/login")
-    public ResponseEntity<Object> doLogin(@RequestParam(name = "user") String user,
-                                          @RequestParam(name = "email") String email,
-                                          @RequestParam(name = "password") String password){
-        return service.doLogin(user,email,password);
+    @PostMapping(path = "/authLogin")
+    public ResponseEntity<Object> login(@RequestBody LoginDTO loginDTO) {
+        return service.doLogin(loginDTO.getUser(), loginDTO.getPassword());
     }
 
     @GetMapping(path = "/accountInfos")

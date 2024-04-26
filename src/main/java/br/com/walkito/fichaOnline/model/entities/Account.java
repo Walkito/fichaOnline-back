@@ -1,15 +1,22 @@
 package br.com.walkito.fichaOnline.model.entities;
 
+import br.com.walkito.fichaOnline.config.CustomAuthorityDeserializer;
+import br.com.walkito.fichaOnline.model.UserRole;
 import com.fasterxml.jackson.annotation.*;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 @Entity
 @Table(name = "accounts")
-public class Account {
+public class Account implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
@@ -34,13 +41,13 @@ public class Account {
     @NotBlank
     private String email;
 
-    @Column(nullable = false, length = 30)
-    @Size(max = 30)
+    @Column(nullable = false, columnDefinition = "TEXT")
     @NotBlank
     private String password;
 
-    @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'J'")
-    private String type = "J";
+    @Column(nullable = false, columnDefinition = "TEXT")
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @Column(nullable = false, length = 1, columnDefinition = "VARCHAR(1) DEFAULT 'A'")
     private String situation = "A";
@@ -127,20 +134,16 @@ public class Account {
         this.user = user;
     }
 
-    public String getPassword() {
-        return password;
-    }
-
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public String getType() {
-        return type;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
     public String getSituation() {
@@ -157,5 +160,44 @@ public class Account {
 
     public void setSheets(List<PlayerSheet> sheets) {
         this.sheets = sheets;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+
+    @JsonDeserialize(using = CustomAuthorityDeserializer.class)
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        if(this.role == UserRole.MASTER) return List.of(new SimpleGrantedAuthority( "ROLE_ADMIN"),
+                new SimpleGrantedAuthority("ROLE_USER"));
+        else return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+
+    @Override
+    public String getUsername() {
+        return user;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }
