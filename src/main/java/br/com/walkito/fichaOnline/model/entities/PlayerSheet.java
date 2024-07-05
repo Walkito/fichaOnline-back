@@ -1,39 +1,52 @@
 package br.com.walkito.fichaOnline.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import br.com.walkito.fichaOnline.model.entities.sheets.SheetDnD;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.UniqueElements;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "players_sheets")
+@Entity
+@Table(name = "players_sheets")
 public class PlayerSheet {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
     @ManyToOne
-    @JoinColumn(name = "accounts_id")
-    @JsonManagedReference
+    @JoinColumn(name = "account_id")
+    @NotNull
     private Account account;
 
     @ManyToOne
-    @JoinColumn(name = "runs_id")
-    @JsonManagedReference
+    @JoinColumn(name = "run_id")
+    @NotNull
     private Run run;
 
-    @OneToMany(mappedBy = "playerSheet",cascade = CascadeType.ALL,orphanRemoval = true)
-    @JsonBackReference
-    private List<SheetDnD> sheetDnd = new ArrayList<>();
+    @OneToOne(cascade = CascadeType.REMOVE)
+    @JoinColumn(name = "sheetDnD_id", referencedColumnName = "id", unique = true)
+    private SheetDnD sheetDnD;
+
+    @Column
+    private LocalDate dateCreation;
 
     public PlayerSheet(){
 
     }
 
-    public PlayerSheet(Account account, Run run) {
-        this.account = account;
-        this.run = run;
+    public PlayerSheet(Account account, Run run, SheetDnD sheetDnD, LocalDate dateCreation){
+        setAccount(account);
+        setRun(run);
+        setSheetDnD(sheetDnD);
+        setDateCreation(dateCreation);
+    }
+
+    public PlayerSheet(int id){
+
     }
 
     public Account getAccount() {
@@ -41,6 +54,7 @@ public class PlayerSheet {
     }
 
     public void setAccount(Account account) {
+        account.getSheets().add(this);
         this.account = account;
     }
 
@@ -49,6 +63,31 @@ public class PlayerSheet {
     }
 
     public void setRun(Run run) {
+        run.getSheets().add(this);
         this.run = run;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public SheetDnD getSheetDnD() {
+        return sheetDnD;
+    }
+
+    public void setSheetDnD(SheetDnD sheetDnD) {
+        this.sheetDnD = sheetDnD;
+    }
+
+    public LocalDate getDateCreation() {
+        return dateCreation;
+    }
+
+    public void setDateCreation(LocalDate dateCreation) {
+        this.dateCreation = dateCreation == null ? LocalDate.now() : dateCreation;
     }
 }

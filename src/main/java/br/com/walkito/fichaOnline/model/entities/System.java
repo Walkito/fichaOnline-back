@@ -1,13 +1,15 @@
 package br.com.walkito.fichaOnline.model.entities;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Entity(name = "systems")
+@Entity
+@Table(name = "systems")
 public class System {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +20,16 @@ public class System {
     @NotBlank
     private String name;
 
-    @OneToMany(mappedBy = "system", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonBackReference
-    private List<Run> runs;
+    @OneToMany(mappedBy = "system")
+    @JsonIgnore
+    private List<Run> runs = new ArrayList<>();
 
     public System(){
 
+    }
+
+    public System(int id) {
+        this.id = id;
     }
 
     public System(String name) {
@@ -34,8 +40,8 @@ public class System {
         return runs;
     }
 
-    public void setRuns(List<Run> runs) {
-        this.runs = runs;
+    public void setRuns(Run run) {
+        this.runs.add(run);
     }
 
     public String getName() {
@@ -44,5 +50,13 @@ public class System {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
