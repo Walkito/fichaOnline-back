@@ -15,21 +15,25 @@ public class PlayerSheetController {
     @Autowired
     PlayerSheetService service;
 
+
     @GetMapping(path = "/get")
     public ResponseEntity<Object> getSheets(@RequestParam(value = "idAccount", defaultValue = "0") int idAccount,
                                             @RequestParam(value = "idRun", defaultValue = "0") int idRun){
         return service.getSheets(idAccount, idRun);
     }
 
+
     @PostMapping(path = "/linkSheet")
     public ResponseEntity<Object> linkSheet(@RequestBody PlayerSheet sheet){
         return service.linkSheet(sheet);
     }
 
+
     @PutMapping(path = "/edit")
     public ResponseEntity<Object> editSheet(@RequestBody PlayerSheet sheet){
         return service.editSheet(sheet);
     }
+
 
     @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteSheet(@RequestParam(value = "idSheet") int idSheet){

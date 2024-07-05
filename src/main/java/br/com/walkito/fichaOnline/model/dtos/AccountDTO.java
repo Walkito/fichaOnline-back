@@ -10,19 +10,19 @@ public class AccountDTO {
 
     private String user;
 
-    private String type;
+    private String role;
 
     private String profilePictureName;
 
     public AccountDTO() {
     }
 
-    public AccountDTO(int id, String name, String lastName, String user, String type, String profilePictureName) {
+    public AccountDTO(int id, String name, String lastName, String user, String role, String profilePictureName) {
         this.id = id;
         this.name = name;
         this.lastName = lastName;
         this.user = user;
-        this.type = type;
+        this.role = role;
         this.profilePictureName = profilePictureName;
     }
 
@@ -66,11 +66,11 @@ public class AccountDTO {
         this.user = user;
     }
 
-    public String getType() {
-        return type;
+    public String getRole() {
+        return role;
     }
 
-    public void setType(String type) {
-        this.type = type;
+    public void setRole(String role) {
+        this.role = role;
     }
 }

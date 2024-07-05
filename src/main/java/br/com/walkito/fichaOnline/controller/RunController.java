@@ -48,6 +48,8 @@ public class RunController {
         return service.getRun(id);
     }
 
+
+
     @PostMapping(path = "/register")
     @ResponseBody
     public ResponseEntity<Object> registerRun(@RequestBody @Valid Run run) {
@@ -59,10 +61,14 @@ public class RunController {
         return service.linkAccount(lra);
     }
 
+
+
     @PutMapping(path = "/edit")
     public ResponseEntity<Object> editRun(@RequestBody @Valid Run run) {
         return service.editRun(run);
     }
+
+
 
     @DeleteMapping(path = "/unlinkAccount")
     public ResponseEntity<Object> unlinkAccount(@RequestParam(value = "idRun") int idRun,

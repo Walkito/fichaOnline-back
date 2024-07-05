@@ -1,6 +1,5 @@
 package br.com.walkito.fichaOnline.model.entities.sheets;
 
-import br.com.walkito.fichaOnline.model.entities.PlayerSheet;
 import br.com.walkito.fichaOnline.model.entities.sheets.dndsheet.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;

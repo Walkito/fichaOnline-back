@@ -63,7 +63,7 @@ public class SystemService {
                         "O sistema não foi encontrado, o id passado não é válido.");
             }
             if(!actualSystem.get().getRuns().isEmpty()){
-                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
+                return new ExceptionConstructor().responseConstructor(HttpStatus.BAD_REQUEST,
                         "Existem Runs vinculadas a esse sistema, não foi possível excluir",
                         "Não é possivel excluir um sistema que tem runs vinculadas, pelo bem da consistência de dados.");
             }

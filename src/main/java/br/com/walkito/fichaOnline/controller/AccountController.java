@@ -18,11 +18,6 @@ public class AccountController {
     @Autowired
     FileService fileService;
 
-    @PostMapping(path = "/authLogin")
-    public ResponseEntity<Object> login(@RequestBody LoginDTO loginDTO) {
-        return service.doLogin(loginDTO.getUser(), loginDTO.getPassword());
-    }
-
     @GetMapping(path = "/accountInfos")
     public ResponseEntity<Object> getAccountInfos(@RequestParam(name = "id") int id){
         return service.getAccountInfos(id);
@@ -52,6 +47,13 @@ public class AccountController {
         return fileService.downloadFile("profile", fileName);
     }
 
+
+
+    @PostMapping(path = "/authLogin")
+    public ResponseEntity<Object> login(@RequestBody LoginDTO loginDTO) {
+        return service.doLogin(loginDTO.getUser(), loginDTO.getPassword());
+    }
+
     @PostMapping(path = "/create", produces = "application/json")
     public ResponseEntity<Object> createAccount(@RequestBody @Valid Account account){
         return service.createAccount(account);
@@ -63,10 +65,14 @@ public class AccountController {
         return fileService.uploadFile(olderFileName,"profile", image);
     }
 
+
+
     @PutMapping(path = "/edit")
     public ResponseEntity<Object> editAccount(@RequestBody @Valid Account account){
         return service.editAccount(account);
     }
+
+
 
     @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteAccount(@RequestParam("idAccount") int idAccount){

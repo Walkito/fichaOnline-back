@@ -22,6 +22,7 @@ public class SheetDnDController {
     @Autowired
     FileService fileService;
 
+
     @GetMapping
     public ResponseEntity<Object> getSheet(@RequestParam("id") int id){
         return service.getSheet(id);
@@ -38,6 +39,8 @@ public class SheetDnDController {
         return fileService.downloadFile("sheets/dnd5e", fileName);
     }
 
+
+
     @PostMapping(path = "/uploadCharacterPicture")
     public ResponseEntity<Object> uploadCharacterPicture(@RequestBody ImageDTO image){
         String olderFileName = service.saveFileName(image);
@@ -53,6 +56,8 @@ public class SheetDnDController {
     public ResponseEntity<Object> updateAttributesInCreation(@RequestBody SheetDnD sheetDnD){
         return service.updateAttributesInCreation(sheetDnD);
     }
+
+
 
     @PutMapping(path = "/edit")
     public ResponseEntity<Object> editSheet(@RequestBody @Valid SheetDnD sheetDnD){

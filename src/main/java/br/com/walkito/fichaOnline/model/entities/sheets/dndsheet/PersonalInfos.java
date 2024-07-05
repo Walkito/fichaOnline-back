@@ -17,15 +17,10 @@ public class PersonalInfos {
     @NotBlank
     private String characterName;
 
-    @Column(nullable = false, length = 35, name = "class")
-    @Size(max = 35)
+    @Column(nullable = false, length = 75, name = "class")
+    @Size(max = 75)
     @NotBlank
     private String _class;
-
-    @Column(nullable = false, precision = 2)
-    @Min(1)
-    @Max(20)
-    private int level;
 
     @Column(nullable = false, length = 30)
     @Size(max = 30)
@@ -57,11 +52,11 @@ public class PersonalInfos {
     @Min(0)
     private int age;
 
-    @Column(precision = 3, scale = 2)
+    @Column(precision = 3)
     @Min(0)
     private double height;
 
-    @Column(precision = 5, scale = 2)
+    @Column(precision = 5)
     @Min(0)
     private double weight;
 
@@ -80,10 +75,9 @@ public class PersonalInfos {
     public PersonalInfos() {
     }
 
-    public PersonalInfos(String characterName, String _class, int level, String antecedent, String playerName, String race, String trend, int experience, int age, double heigth, double weigth, String eyes, String skin, String hair) {
+    public PersonalInfos(String characterName, String _class, String antecedent, String playerName, String race, String trend, int experience, int age, double heigth, double weigth, String eyes, String skin, String hair) {
         this.characterName = characterName;
         this._class = _class;
-        this.level = level;
         this.antecedent = antecedent;
         this.playerName = playerName;
         this.race = race;
@@ -111,14 +105,6 @@ public class PersonalInfos {
 
     public void set_class(String _class) {
         this._class = _class;
-    }
-
-    public int getLevel() {
-        return level;
-    }
-
-    public void setLevel(int level) {
-        this.level = level;
     }
 
     public String getAntecedent() {
@@ -217,3 +203,5 @@ public class PersonalInfos {
         this.id = id;
     }
 }
+
+

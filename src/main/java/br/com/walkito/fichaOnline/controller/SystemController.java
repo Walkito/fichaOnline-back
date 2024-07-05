@@ -21,16 +21,22 @@ public class SystemController {
         return service.getSystems();
     }
 
+
+
     @PostMapping(path = "/create")
     public ResponseEntity<Object> createSystems(@RequestBody @Valid System system){
         return service.createSystem(system);
     }
+
+
 
     @PutMapping(path = "/edit")
     public ResponseEntity<Object> editSystem(@RequestBody @Valid System system){
 
         return service.editSystem(system);
     }
+
+
 
     @DeleteMapping(path = "/delete")
     public ResponseEntity<Object> deleteSystem(@RequestParam("idSystem") int idSystem){

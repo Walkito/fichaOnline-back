@@ -10,11 +10,6 @@ import java.util.Optional;
 
 public interface AccountRepository extends JpaRepository<Account, Integer> {
 
-    @Query("SELECT a FROM Account a WHERE (a.user = :user OR a.email = :email) AND a.password = :password")
-    public UserDetails getLogin(@Param("user") String user,
-                                @Param("email") String email,
-                                @Param("password") String password);
-
     @Query("SELECT a FROM Account a WHERE a.email = :email AND a.id != :id")
     public Optional<Account> searchByEmail(@Param("email") String email,
                                  @Param("id") int id);

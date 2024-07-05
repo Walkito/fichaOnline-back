@@ -5,14 +5,14 @@ import br.com.walkito.fichaOnline.model.entities.Account;
 public class LoginResponse {
     private String token;
 
-    private Account account;
+    private AccountDTO accountDTO;
 
     public LoginResponse() {
     }
 
-    public LoginResponse(String token, Account account) {
+    public LoginResponse(String token, AccountDTO accountDTO) {
         this.token = token;
-        this.account = account;
+        this.accountDTO = accountDTO;
     }
 
     public String getToken() {
@@ -23,11 +23,11 @@ public class LoginResponse {
         this.token = token;
     }
 
-    public Account getAccount() {
-        return account;
+    public AccountDTO getAccountDTO() {
+        return accountDTO;
     }
 
-    public void setAccount(Account account) {
-        this.account = account;
+    public void setAccountDTO(AccountDTO accountDTO) {
+        this.accountDTO = accountDTO;
     }
 }

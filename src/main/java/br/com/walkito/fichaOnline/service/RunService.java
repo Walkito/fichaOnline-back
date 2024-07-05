@@ -69,6 +69,7 @@ public class RunService {
     public ResponseEntity<Object> editRun(Run run) {
         try {
             Optional<Run> actualRun = repository.findById(run.getId());
+
             if (actualRun.isEmpty()) {
                 return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
                         "Não foi possível editar esta Run!",
@@ -116,8 +117,10 @@ public class RunService {
             }
 
             run.unlinkAccount(account);
+
             repository.save(run);
             accountRepository.save(account);
+
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));

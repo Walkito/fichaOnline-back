@@ -37,6 +37,27 @@ public class AccountService{
     @Autowired
     private TokenService tokenService;
 
+    public ResponseEntity<Object> createAccount(Account account) {
+        try {
+            if (!Utils.emailValidator(account.getEmail())) {
+                return new ExceptionConstructor().responseConstructor(HttpStatus.BAD_REQUEST,
+                        "E-mail não é válido",
+                        "O E-mail informado não é válido. Por favor, inserir um e-mail válido");
+            }
+
+            account.setSituation("A");
+
+            String encryptedPassword = new BCryptPasswordEncoder().encode(account.getPassword());
+            account.setPassword(encryptedPassword);
+
+            repository.save(account);
+
+            return ResponseEntity.ok().build();
+        } catch (Exception e) {
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
+        }
+    }
+
     public ResponseEntity<Object> doLogin(String user, String password) {
         try {
             var usernamePassword = new UsernamePasswordAuthenticationToken(user, password);
@@ -50,9 +71,76 @@ public class AccountService{
                 return ResponseEntity.badRequest().build();
             }
 
-            LoginResponse login = new LoginResponse(token, account);
+            AccountDTO accountDTO = convertDTO(account);
+            accountDTO.setRole(accountDTO.getRole().toUpperCase());
+            LoginResponse login = new LoginResponse(token, accountDTO);
 
             return ResponseEntity.ok(login);
+        } catch (Exception e) {
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public String saveFileName(int id, String fileName) {
+        try {
+            Optional<Account> account = repository.findById(id);
+
+            if (account.isPresent()) {
+                String olderFileName = account.get().getProfilePictureName();
+
+                account.get().setProfilePictureName(fileName);
+                repository.save(account.get());
+
+                return olderFileName;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ResponseEntity<Object> editAccount(Account account) {
+        try {
+            if (!Utils.emailValidator(account.getEmail())) {
+                return new ExceptionConstructor().responseConstructor(HttpStatus.BAD_REQUEST,
+                        "E-mail não é válido",
+                        "O E-mail informado não é válido. Por favor, inserir um e-mail válido");
+            }
+
+            Account actualAccount = repository.searchById(account.getId());
+            BeanUtils.copyProperties(account, actualAccount, "runs", "sheets", "role", "profilePictureName");
+
+            String encryptedPassword = new BCryptPasswordEncoder().encode(actualAccount.getPassword());
+            actualAccount.setPassword(encryptedPassword);
+
+            repository.save(actualAccount);
+
+            AccountDTO accountDTO = convertDTO(actualAccount);
+            return ResponseEntity.ok(accountDTO);
+        } catch (Exception e) {
+            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
+        }
+    }
+
+    public ResponseEntity<Object> deleteAccount(int idAccount) {
+        try {
+            Account account = repository.searchById(idAccount);
+
+            if (account.getId() < 1 || account.getSituation().equals("I")) {
+                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
+                        "Não foi possível excluir a conta.",
+                        "Id passado não existe ou conta já está inativa!");
+            }
+
+            if (account.getRuns().isEmpty()) {
+                repository.delete(account);
+                return ResponseEntity.ok(0);
+            } else {
+                account.setSituation("I");
+                repository.save(account);
+                return ResponseEntity.ok(1);
+            }
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
@@ -77,9 +165,7 @@ public class AccountService{
             if (account.isPresent()) {
                 return new ResponseEntity<>(convertDTO(account.get()), HttpStatus.OK);
             } else {
-                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
-                        "Conta não encontrada.",
-                        "Conta não foi encontrada com o ID passado.");
+                return ResponseEntity.notFound().build();
             }
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
@@ -97,44 +183,6 @@ public class AccountService{
             return "";
         }
         return "";
-    }
-
-    public ResponseEntity<Object> createAccount(Account account) {
-        try {
-            if (!Utils.emailValidator(account.getEmail())) {
-                return new ExceptionConstructor().responseConstructor(HttpStatus.BAD_REQUEST,
-                        "E-mail não é válido",
-                        "O E-mail informado não é válido. Por favor, inserir um e-mail válido");
-            }
-
-            account.setSituation("A");
-            String encryptedPassword = new BCryptPasswordEncoder().encode(account.getPassword());
-            account.setPassword(encryptedPassword);
-            repository.save(account);
-
-            return ResponseEntity.ok().build();
-        } catch (Exception e) {
-            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
-        }
-    }
-
-    public ResponseEntity<Object> editAccount(Account account) {
-        try {
-            if (!Utils.emailValidator(account.getEmail())) {
-                return new ExceptionConstructor().responseConstructor(HttpStatus.BAD_REQUEST,
-                        "E-mail não é válido",
-                        "O E-mail informado não é válido. Por favor, inserir um e-mail válido");
-            }
-            Account actualAccount = repository.searchById(account.getId());
-            BeanUtils.copyProperties(account, actualAccount, new String[]{"runs", "sheets"});
-
-            String encryptedPassword = new BCryptPasswordEncoder().encode(actualAccount.getPassword());
-            actualAccount.setPassword(encryptedPassword);
-            repository.save(actualAccount);
-            return new ResponseEntity<>(actualAccount, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
-        }
     }
 
     public ResponseEntity<Object> getLinkedRuns(int idAccount) {
@@ -174,42 +222,6 @@ public class AccountService{
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
-    }
-
-    public ResponseEntity<Object> deleteAccount(int idAccount) {
-        try {
-            Account account = repository.searchById(idAccount);
-            if (account.getId() < 1 || account.getSituation().equals("I")) {
-                return new ExceptionConstructor().responseConstructor(HttpStatus.NOT_FOUND,
-                        "Não foi possível excluir a conta.",
-                        "Id passado não existe ou conta já está inativa!");
-            }
-            if (account.getRuns().isEmpty()) {
-                repository.delete(account);
-                return new ResponseEntity<>(0, HttpStatus.OK);
-            } else {
-                account.setSituation("I");
-                repository.save(account);
-                return new ResponseEntity<>(1, HttpStatus.OK);
-            }
-        } catch (Exception e) {
-            return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR, e.getMessage(), Arrays.toString(e.getStackTrace()));
-        }
-    }
-
-    public String saveFileName(int id, String fileName) {
-        try {
-            Optional<Account> account = repository.findById(id);
-            if (account.isPresent()) {
-                String olderFileName = account.get().getProfilePictureName();
-                account.get().setProfilePictureName(fileName);
-                repository.save(account.get());
-                return olderFileName;
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     private AccountDTO convertDTO(Account account) {

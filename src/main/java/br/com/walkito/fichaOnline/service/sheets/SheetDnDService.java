@@ -72,8 +72,10 @@ public class SheetDnDService {
                         "Impossível editar a ficha!",
                         "Impossível editar a ficha pois não foi achado nenhuma ficha com esse ID.");
             }
+
             businessRules(sheetDnD);
             messagingTemplate.convertAndSend("/topic/SheetEdit", new PayloadMessageDTO("Uma ficha foi atualizada", sheetInfos.getRun().getId()));
+
             return new ResponseEntity<>(repository.save(sheetDnD), HttpStatus.OK);
         } catch (Exception e) {
             return new ExceptionConstructor().responseConstructor(HttpStatus.INTERNAL_SERVER_ERROR,
